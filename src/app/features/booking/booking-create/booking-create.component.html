@@ -1,0 +1,88 @@
+<!-- src/app/features/booking/booking-create/booking-create.component.html -->
+<div class="booking-create-container">
+    <div class="booking-header">
+      <h1>{{ 'booking.create.title' | translate }}</h1>
+      <button routerLink="/booking" class="btn-link">
+        <i class="fas fa-arrow-left"></i> {{ 'booking.create.back' | translate }}
+      </button>
+    </div>
+  
+    <div class="booking-card">
+      <div *ngIf="error" class="alert-error">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>{{ error }}</span>
+      </div>
+  
+      <div *ngIf="success" class="alert-success">
+        <i class="fas fa-check-circle"></i>
+        <span>{{ success }}</span>
+      </div>
+  
+      <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="spaceId">{{ 'booking.create.space' | translate }} <span class="required">*</span></label>
+          <select id="spaceId" formControlName="spaceId" class="form-control">
+            <option value="">{{ 'booking.create.selectSpace' | translate }}</option>
+            <option *ngFor="let space of spaces" [value]="space.id">
+              {{ space.name }} ({{ 'booking.create.capacity' | translate }}: {{ space.capacity }})
+            </option>
+          </select>
+          <div *ngIf="bookingForm.get('spaceId')?.touched && bookingForm.get('spaceId')?.invalid" class="form-error">
+            {{ 'booking.create.spaceRequired' | translate }}
+          </div>
+        </div>
+  
+        <div class="date-time-container">
+          <div class="date-time-column">
+            <h3>{{ 'booking.create.start' | translate }} <span class="required">*</span></h3>
+            <div class="form-group">
+              <label for="startDate">{{ 'booking.create.date' | translate }}</label>
+              <input type="date" id="startDate" formControlName="startDate" class="form-control">
+              <div *ngIf="bookingForm.get('startDate')?.touched && bookingForm.get('startDate')?.invalid" class="form-error">
+                {{ 'booking.create.dateRequired' | translate }}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="startTime">{{ 'booking.create.time' | translate }}</label>
+              <input type="time" id="startTime" formControlName="startTime" class="form-control">
+              <div *ngIf="bookingForm.get('startTime')?.touched && bookingForm.get('startTime')?.invalid" class="form-error">
+                {{ 'booking.create.timeRequired' | translate }}
+              </div>
+            </div>
+          </div>
+  
+          <div class="date-time-column">
+            <h3>{{ 'booking.create.end' | translate }} <span class="required">*</span></h3>
+            <div class="form-group">
+              <label for="endDate">{{ 'booking.create.date' | translate }}</label>
+              <input type="date" id="endDate" formControlName="endDate" class="form-control">
+              <div *ngIf="bookingForm.get('endDate')?.touched && bookingForm.get('endDate')?.invalid" class="form-error">
+                {{ 'booking.create.dateRequired' | translate }}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="endTime">{{ 'booking.create.time' | translate }}</label>
+              <input type="time" id="endTime" formControlName="endTime" class="form-control">
+              <div *ngIf="bookingForm.get('endTime')?.touched && bookingForm.get('endTime')?.invalid" class="form-error">
+                {{ 'booking.create.timeRequired' | translate }}
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-actions">
+          <button type="button" (click)="checkAvailability()" class="btn-secondary" [disabled]="loading">
+            {{ 'booking.create.checkAvailability' | translate }}
+          </button>
+          <button type="submit" class="btn-primary" [disabled]="bookingForm.invalid || loading || !isAvailable">
+            <i class="fas fa-check"></i> {{ 'booking.create.book' | translate }}
+          </button>
+        </div>
+  
+        <div *ngIf="loading" class="loading-overlay">
+          <div class="spinner"></div>
+          <p>{{ 'booking.create.processing' | translate }}</p>
+        </div>
+      </form>
+    </div>
+  </div>

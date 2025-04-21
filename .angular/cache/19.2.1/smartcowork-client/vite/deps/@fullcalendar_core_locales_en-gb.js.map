@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../node_modules/@fullcalendar/core/locales/en-gb.js"],
+  "sourcesContent": ["var l20 = {\n  code: 'en-gb',\n  week: {\n    dow: 1,\n    doy: 4 // The week that contains Jan 4th is the first week of the year.\n  },\n  buttonHints: {\n    prev: 'Previous $0',\n    next: 'Next $0',\n    today: 'This $0'\n  },\n  viewHint: '$0 view',\n  navLinkHint: 'Go to $0',\n  moreLinkHint(eventCnt) {\n    return `Show ${eventCnt} more event${eventCnt === 1 ? '' : 's'}`;\n  }\n};\nexport { l20 as default };"],
+  "mappings": ";;;AAAA,IAAI,MAAM;AAAA,EACR,MAAM;AAAA,EACN,MAAM;AAAA,IACJ,KAAK;AAAA,IACL,KAAK;AAAA;AAAA,EACP;AAAA,EACA,aAAa;AAAA,IACX,MAAM;AAAA,IACN,MAAM;AAAA,IACN,OAAO;AAAA,EACT;AAAA,EACA,UAAU;AAAA,EACV,aAAa;AAAA,EACb,aAAa,UAAU;AACrB,WAAO,QAAQ,QAAQ,cAAc,aAAa,IAAI,KAAK,GAAG;AAAA,EAChE;AACF;",
+  "names": []
+}

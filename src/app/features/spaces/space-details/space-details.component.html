@@ -1,0 +1,110 @@
+<!-- src/app/features/spaces/space-details/space-details.component.html -->
+<div class="space-detail-container">
+    <!-- Loader -->
+    <div class="loader-container" *ngIf="isLoading">
+      <div class="loader"></div>
+      <p>{{ 'COMMON.LOADING' | translate }}</p>
+    </div>
+    
+    <!-- Message d'erreur -->
+    <div class="error-message" *ngIf="error">
+      {{ error }}
+      <button (click)="loadSpace()">{{ 'COMMON.RETRY' | translate }}</button>
+    </div>
+    
+    <!-- Contenu -->
+    <div class="space-content" *ngIf="space && !isLoading && !error">
+      <div class="back-link">
+        <a routerLink="/spaces">&larr; {{ 'SPACES.BACK_TO_SPACES' | translate }}</a>
+      </div>
+      
+      <!-- Actions Admin -->
+<!-- Actions Admin -->
+<div class="admin-menu" *ngIf="authService.isAdmin()">
+  <button class="menu-trigger">
+    <span class="dots"></span>
+  </button>
+  <div class="dropdown-menu">
+    <a [routerLink]="['/spaces/edit', space.id]" class="menu-item">
+      <i class="item-icon edit"></i>
+      <span>{{ 'COMMON.EDIT' | translate }}</span>
+    </a>
+    <a (click)="deleteSpace()" class="menu-item delete">
+      <i class="item-icon trash"></i>
+      <span>{{ 'COMMON.DELETE' | translate }}</span>
+    </a>
+  </div>
+</div>
+      
+      <div class="space-header">
+        <h1>{{ space.name }}</h1>
+        <div class="space-status" [ngClass]="getStatusClass(space.status)">
+          {{ getStatusName(space.status) }}
+        </div>
+      </div>
+      
+      <div class="space-body">
+        <div class="space-images">
+          <img [src]="space.imageUrl || 'assets/images/default-space.jpg'" [alt]="space.name">
+        </div>
+        
+        <div class="space-info">
+          <div class="info-section">
+            <h2>{{ 'SPACES.DESCRIPTION' | translate }}</h2>
+            <p>{{ space.description }}</p>
+          </div>
+          
+          <div class="info-section">
+            <h2>{{ 'SPACES.FEATURES' | translate }}</h2>
+            <ul class="features-list">
+              <li>
+                <i class="type-icon"></i>
+                <span>{{ 'SPACES.TYPE' | translate }}: {{ getSpaceTypeName(space.type) }}</span>
+              </li>
+              <li>
+                <i class="capacity-icon"></i>
+                <span>{{ 'SPACES.CAPACITY' | translate }}: {{ space.capacity }} {{ 'SPACES.PEOPLE' | translate }}</span>
+              </li>
+              <li *ngIf="space.city">
+                <i class="location-icon"></i>
+                <span>{{ 'SPACES.LOCATION' | translate }}: {{ space.city }}</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="info-section">
+            <h2>{{ 'SPACES.PRICING' | translate }}</h2>
+            <div class="pricing-table">
+              <div class="price-row">
+                <span>{{ 'SPACES.HOUR' | translate }}</span>
+                <span>{{ space.pricePerHour }}{{ 'SPACES.CURRENCY' | translate }}</span>
+              </div>
+              <div class="price-row">
+                <span>{{ 'SPACES.DAY' | translate }}</span>
+                <span>{{ space.pricePerDay }}{{ 'SPACES.CURRENCY' | translate }}</span>
+              </div>
+              <div class="price-row">
+                <span>{{ 'SPACES.WEEK' | translate }}</span>
+                <span>{{ space.pricePerWeek }}{{ 'SPACES.CURRENCY' | translate }}</span>
+              </div>
+              <div class="price-row">
+                <span>{{ 'SPACES.MONTH' | translate }}</span>
+                <span>{{ space.pricePerMonth }}{{ 'SPACES.CURRENCY' | translate }}</span>
+              </div>
+              <div class="price-row">
+                <span>{{ 'SPACES.YEAR' | translate }}</span>
+                <span>{{ space.pricePerYear }}{{ 'SPACES.CURRENCY' | translate }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="booking-section" *ngIf="space.status === spaceStatuses.Available">
+        <h2>{{ 'SPACES.BOOK_THIS_SPACE' | translate }}</h2>
+        <button class="book-now-btn" [routerLink]="['/booking/create']" [queryParams]="{spaceId: space.id}">
+          {{ 'SPACES.BOOK_NOW' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>

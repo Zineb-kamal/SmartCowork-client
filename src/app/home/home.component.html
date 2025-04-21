@@ -1,0 +1,145 @@
+<!-- src/app/home/home.component.html -->
+
+
+<div class="home-container">
+  <div class="hero-content">
+    <h1 class="welcome-text">{{ 'HOME.TITLE' | translate }}</h1>
+    <div class="welcome-accent"></div>
+    <p class="welcome-description">{{ 'HOME.DESCRIPTION' | translate }}</p>
+  
+
+<div class="spaces-section">
+  <div class="container">
+    <h2 class="section-title">{{ 'HOME.SPACES.TITLE' | translate }}</h2>
+    <p class="section-subtitle">{{ 'HOME.SPACES.SUBTITLE' | translate }}</p>
+  
+    
+    <div class="space-types-grid">
+      <!-- Bureau individuel -->
+      <div class="space-card">
+        <div class="space-content">
+          <h3>{{ 'HOME.SPACES.DESK.TITLE' | translate }}</h3>
+          <p>{{ 'HOME.SPACES.DESK.DESCRIPTION' | translate }}</p>
+          <div class="space-details">
+            <span class="space-price">{{ 'HOME.SPACES.FROM' | translate }} {{ currencySymbol }}15/{{ 'HOME.SPACES.HOUR' | translate }}</span>
+            <button class="space-button">{{ 'HOME.SPACES.DISCOVER' | translate }}</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Salle de réunion -->
+      <div class="space-card">
+        <div class="space-content">
+          <h3>{{ 'HOME.SPACES.MEETING_ROOM.TITLE' | translate }}</h3>
+          <p>{{ 'HOME.SPACES.MEETING_ROOM.DESCRIPTION' | translate }}</p>
+          <div class="space-details">
+            <span class="space-price">{{ 'HOME.SPACES.FROM' | translate }} {{ currencySymbol }}30/{{ 'HOME.SPACES.HOUR' | translate }}</span>
+            <button class="space-button">{{ 'HOME.SPACES.DISCOVER' | translate }}</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Bureau privé -->
+      <div class="space-card">
+        <div class="space-content">
+          <h3>{{ 'HOME.SPACES.PRIVATE_OFFICE.TITLE' | translate }}</h3>
+          <p>{{ 'HOME.SPACES.PRIVATE_OFFICE.DESCRIPTION' | translate }}</p>
+          <div class="space-details">
+            <span class="space-price">{{ 'HOME.SPACES.FROM' | translate }} {{ currencySymbol }}25/{{ 'HOME.SPACES.HOUR' | translate }}</span>
+            <button class="space-button">{{ 'HOME.SPACES.DISCOVER' | translate }}</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Salle de conférence -->
+      <div class="space-card">
+        <div class="space-content">
+          <h3>{{ 'HOME.SPACES.CONFERENCE_ROOM.TITLE' | translate }}</h3>
+          <p>{{ 'HOME.SPACES.CONFERENCE_ROOM.DESCRIPTION' | translate }}</p>
+          <div class="space-details">
+            <span class="space-price">{{ 'HOME.SPACES.FROM' | translate }} {{ currencySymbol }}50/{{ 'HOME.SPACES.HOUR' | translate }}</span>
+            <button class="space-button">{{ 'HOME.SPACES.DISCOVER' | translate }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Add this after the spaces-section div in your home.component.html -->
+<div class="services-section">
+  <div class="container">
+    <h2 class="section-title">{{ 'HOME.SERVICES.TITLE' | translate }}</h2>
+    <p class="section-subtitle">{{ 'HOME.SERVICES.SUBTITLE' | translate }}</p>
+    
+    <div class="services-grid">
+      <!-- Service 1: High-Speed Internet -->
+      <div class="service-card">
+        <div class="service-icon">
+          <i class="wifi-icon"></i>
+        </div>
+        <div class="service-content">
+          <h3>{{ 'HOME.SERVICES.INTERNET.TITLE' | translate }}</h3>
+          <p>{{ 'HOME.SERVICES.INTERNET.DESCRIPTION' | translate }}</p>
+        </div>
+      </div>
+      
+      <!-- Service 2: Meeting Rooms -->
+      <div class="service-card">
+        <div class="service-icon">
+          <i class="meeting-icon"></i>
+        </div>
+        <div class="service-content">
+          <h3>{{ 'HOME.SERVICES.MEETING.TITLE' | translate }}</h3>
+          <p>{{ 'HOME.SERVICES.MEETING.DESCRIPTION' | translate }}</p>
+        </div>
+      </div>
+      
+      <!-- Service 3: Coffee & Refreshments -->
+      <div class="service-card">
+        <div class="service-icon">
+          <i class="coffee-icon"></i>
+        </div>
+        <div class="service-content">
+          <h3>{{ 'HOME.SERVICES.REFRESHMENTS.TITLE' | translate }}</h3>
+          <p>{{ 'HOME.SERVICES.REFRESHMENTS.DESCRIPTION' | translate }}</p>
+        </div>
+      </div>
+      
+      <!-- Service 4: 24/7 Access -->
+      <div class="service-card">
+        <div class="service-icon">
+          <i class="access-icon"></i>
+        </div>
+        <div class="service-content">
+          <h3>{{ 'HOME.SERVICES.ACCESS.TITLE' | translate }}</h3>
+          <p>{{ 'HOME.SERVICES.ACCESS.DESCRIPTION' | translate }}</p>
+        </div>
+      </div>
+      
+      <!-- Service 5: Printing Services -->
+      <div class="service-card">
+        <div class="service-icon">
+          <i class="print-icon"></i>
+        </div>
+        <div class="service-content">
+          <h3>{{ 'HOME.SERVICES.PRINTING.TITLE' | translate }}</h3>
+          <p>{{ 'HOME.SERVICES.PRINTING.DESCRIPTION' | translate }}</p>
+        </div>
+      </div>
+      
+      <!-- Service 6: Event Spaces -->
+      <div class="service-card">
+        <div class="service-icon">
+          <i class="event-icon"></i>
+        </div>
+        <div class="service-content">
+          <h3>{{ 'HOME.SERVICES.EVENTS.TITLE' | translate }}</h3>
+          <p>{{ 'HOME.SERVICES.EVENTS.DESCRIPTION' | translate }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- src/app/home/home.component.html -->
+<!-- Ajouter ceci à la fin du fichier -->
+<!-- <app-contact-popup *ngIf="showContactPopup" (close)="closeContactPopup()"></app-contact-popup> -->

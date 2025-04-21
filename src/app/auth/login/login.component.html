@@ -1,0 +1,44 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="logo">SmartCowork</div>
+    
+    <div class="tabs">
+      <div class="tab active">{{ 'LOGIN.TAB' | translate }}</div>
+      <div class="tab" routerLink="/register">{{ 'REGISTER.TAB' | translate }}</div>
+    </div>
+    
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-field">
+        <input 
+          type="email" 
+          formControlName="email" 
+          placeholder="{{ 'LOGIN.EMAIL_PLACEHOLDER' | translate }}"
+          autocomplete="email"
+        >
+        <div class="email-icon"></div>
+      </div>
+      
+      <div class="form-field">
+        <input 
+          [type]="showPassword ? 'text' : 'password'" 
+          formControlName="password" 
+          placeholder="{{ 'LOGIN.PASSWORD_PLACEHOLDER' | translate }}"
+          autocomplete="current-password"
+        >
+        <div class="password-icon"></div>
+        <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+          <i [class]="showPassword ? 'eye-icon-off' : 'eye-icon'"></i>
+        </button>
+      </div>
+      
+      <div class="forgot-password">
+        <a href="#" class="forgot-link">{{ 'LOGIN.FORGOT_PASSWORD' | translate }}</a>
+      </div>
+      
+      <button type="submit" class="login-button" [disabled]="loading || loginForm.invalid">
+        <span *ngIf="loading" class="spinner"></span>
+        {{ 'LOGIN.CONTINUE' | translate }}
+      </button>
+    </form>
+  </div>
+</div>

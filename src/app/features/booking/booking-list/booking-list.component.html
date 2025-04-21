@@ -1,0 +1,93 @@
+<!-- src/app/features/booking/booking-list/booking-list.component.html -->
+<div class="booking-list-container">
+
+<div class="booking-header">
+  <h1>{{ 'booking.list.title' | translate }}</h1>
+  <div class="action-buttons">
+    <a routerLink="/booking/calendar" class="btn-calendar">
+      <i class="fas fa-calendar-alt"></i> {{ 'booking.list.viewCalendar' | translate }}
+    </a>
+    <a routerLink="/booking/create" class="btn-new-booking">
+      <i class="fas fa-plus"></i> {{ 'booking.list.newBooking' | translate }}
+    </a>
+  </div>
+</div>
+
+  <div class="booking-card">
+    <div class="search-container">
+      <input 
+        type="text" 
+        [placeholder]="'booking.list.searchPlaceholder' | translate" 
+        (input)="onSearch($event)" 
+        class="search-input"
+      >
+      <i class="fas fa-search search-icon"></i>
+    </div>
+
+    <div *ngIf="loading" class="booking-loading">
+      <div class="booking-spinner"></div>
+      <p>{{ 'booking.list.loading' | translate }}</p>
+    </div>
+
+    <div *ngIf="error" class="booking-error">
+      <i class="fas fa-exclamation-circle"></i>
+      <p>{{ error }}</p>
+    </div>
+
+    <div *ngIf="!loading && !error && filteredBookings.length === 0" class="booking-empty">
+      <p *ngIf="searchTerm">{{ 'booking.list.noSearchResults' | translate }}</p>
+      <p *ngIf="!searchTerm">{{ 'booking.list.noBookings' | translate }}</p>
+      <button routerLink="/booking/create" class="btn-secondary">
+        {{ 'booking.list.createBooking' | translate }}
+      </button>
+    </div>
+
+    <div *ngIf="!loading && !error && filteredBookings.length > 0" class="booking-table-container">
+      <table class="booking-table">
+        <thead>
+          <tr>
+            <!-- Supprimé la colonne ID -->
+            <th>{{ 'booking.list.space' | translate }}</th>
+            <th>{{ 'booking.list.startTime' | translate }}</th>
+            <th>{{ 'booking.list.endTime' | translate }}</th>
+            <th>{{ 'booking.list.price' | translate }}</th>
+            <th>{{ 'booking.list.status' | translate }}</th>
+            <th>{{ 'booking.list.actions' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let booking of filteredBookings">
+            <!-- Supprimé la colonne ID -->
+            <td>{{ booking.spaceName || 'Espace inconnu' }}</td>
+            <td>{{ formatDate(booking.startTime) }}</td>
+            <td>{{ formatDate(booking.endTime) }}</td>
+            <td>{{ formatPrice(booking.totalPrice) }}</td>
+            <td>
+              <span [ngClass]="['status-badge', getStatusClass(booking.status)]">
+                {{ getStatusText(booking.status) }}
+              </span>
+            </td>
+            <td class="actions-cell">
+              <button [routerLink]="['/booking', booking.id]" class="btn-icon view-btn">
+                <i class="fas fa-eye"></i>
+              </button>
+              
+             <!-- Dans booking-list.component.html -->
+<button (click)="navigateToEdit(booking.id)" class="btn-icon edit-btn">
+  <i class="fas fa-edit"></i>
+</button>
+              
+              <!-- Annuler (affiché seulement pour les réservations actives) -->
+              <button 
+                *ngIf="isActiveBooking(booking.status)"
+                (click)="cancelBooking(booking.id)" 
+                class="btn-icon cancel-btn">
+                <i class="fas fa-times"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

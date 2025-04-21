@@ -1,0 +1,87 @@
+<!-- src/app/spaces/spaces-catalog/spaces-catalog.component.html -->
+<div class="spaces-container">
+  <div class="spaces-header">
+    <h1>{{ 'SPACES.DISCOVER_TITLE' | translate }}</h1>
+    <p class="spaces-subtitle">{{ 'SPACES.DISCOVER_SUBTITLE' | translate }}</p>
+  </div>
+  
+  <div class="filters-section">
+    <div class="filters-card">
+      <h3>{{ 'SPACES.FILTERS.TITLE' | translate }}</h3>
+      
+      <div class="filters-grid">
+        <div class="filter-group">
+          <label for="typeFilter">{{ 'SPACES.FILTERS.TYPE' | translate }}</label>
+          <select id="typeFilter" [(ngModel)]="selectedType" (change)="loadSpaces()">
+            <option *ngFor="let type of spaceTypes" [value]="type.value">{{ type.label }}</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label for="cityFilter">{{ 'SPACES.FILTERS.CITY' | translate }}</label>
+          <select id="cityFilter" [(ngModel)]="selectedCity" (change)="applyFilters()">
+            <option value="">{{ 'SPACES.FILTERS.ALL_CITIES' | translate }}</option>
+            <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label for="minPriceFilter">{{ 'SPACES.FILTERS.MIN_PRICE' | translate }}</label>
+          <input type="number" id="minPriceFilter" [(ngModel)]="minPrice" (change)="applyFilters()">
+        </div>
+        
+        <div class="filter-group">
+          <label for="maxPriceFilter">{{ 'SPACES.FILTERS.MAX_PRICE' | translate }}</label>
+          <input type="number" id="maxPriceFilter" [(ngModel)]="maxPrice" (change)="applyFilters()">
+        </div>
+      </div>
+      
+      <button class="reset-btn" (click)="resetFilters()">{{ 'SPACES.FILTERS.RESET' | translate }}</button>
+    </div>
+  </div>
+  
+  <div *ngIf="loading" class="loading-indicator">
+    {{ 'SPACES.LOADING' | translate }}
+  </div>
+  
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+  
+  <div *ngIf="!loading && filteredSpaces.length === 0" class="no-results">
+    {{ 'SPACES.NO_RESULTS' | translate }}
+  </div>
+  
+  <div class="spaces-grid">
+    <div *ngFor="let space of filteredSpaces" class="space-card" [routerLink]="['/spaces', space.id]">
+      <div class="space-image">
+        <img [src]="space.imageUrl || 'assets/images/desk.jpg'" [alt]="space.name">
+        <div class="space-badge" *ngIf="space.status !== 0">
+          {{ space.status === 1 ? ('SPACES.STATUS.OCCUPIED' | translate) : ('SPACES.STATUS.MAINTENANCE' | translate) }}
+        </div>
+      </div>
+      
+      <div class="space-content">
+        <h3 class="space-title">{{ space.name }}</h3>
+        <p class="space-location" *ngIf="space.city">{{ space.city }}</p>
+        
+        <div class="space-features">
+          <span class="feature">
+            <i class="capacity-icon"></i> {{ space.capacity }} {{ 'SPACES.PEOPLE' | translate }}
+          </span>
+          <span class="feature">
+            <i class="type-icon"></i> 
+            {{ getSpaceTypeLabel(space.type) }}
+          </span>
+        </div>
+        
+        <div class="space-footer">
+          <div class="space-price">
+            {{ 'SPACES.FROM' | translate }} {{ space.pricePerHour }} {{ 'SPACES.CURRENCY' | translate }}/{{ 'SPACES.HOUR' | translate }}
+          </div>
+          <button class="space-details-btn">{{ 'SPACES.DETAILS_BUTTON' | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

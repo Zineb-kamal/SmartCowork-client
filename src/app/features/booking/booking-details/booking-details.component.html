@@ -1,0 +1,73 @@
+<!-- src/app/features/booking/booking-details/booking-details.component.html -->
+<div class="booking-details-container">
+  <div class="page-header">
+    <h1>{{ 'booking.details.title' | translate }}</h1>
+    <a (click)="goBack()" class="back-link">
+      <i class="fas fa-arrow-left"></i> {{ 'booking.details.back' | translate }}
+    </a>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+  </div>
+
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <div *ngIf="!loading && !error && booking" class="details-card">
+    <!-- ID de réservation -->
+    <div class="booking-id-section">
+      <div class="status-indicator"></div>
+      <div class="booking-id-text">ID: {{ booking.id }}</div>
+    </div>
+
+    <!-- Section Date et Heure -->
+    <div class="details-section">
+      <h2>{{ 'booking.details.dateTime' | translate }}</h2>
+      
+      <div class="info-row">
+        <div class="info-label">{{ 'booking.details.startTime' | translate }}:</div>
+        <div class="info-value">{{ formatDate(booking.startTime) }}</div>
+      </div>
+      
+      <div class="info-row">
+        <div class="info-label">{{ 'booking.details.endTime' | translate }}:</div>
+        <div class="info-value">{{ formatDate(booking.endTime) }}</div>
+      </div>
+    </div>
+
+    <!-- Section Informations sur l'espace -->
+    <div class="details-section">
+      <h2>{{ 'booking.details.spaceInfo' | translate }}</h2>
+      
+      <div class="info-row">
+        <div class="info-label">{{ 'booking.details.spaceId' | translate }}:</div>
+        <div class="info-value">{{ booking.spaceId }}</div>
+      </div>
+      
+      <div *ngIf="space" class="info-row">
+        <div class="info-label">{{ 'booking.details.spaceName' | translate }}:</div>
+        <div class="info-value">{{ space.name }}</div>
+      </div>
+      
+      <div *ngIf="space" class="info-row">
+        <div class="info-label">{{ 'booking.details.location' | translate }}:</div>
+        <div class="info-value">{{ space.location || 'N/A' }}</div>
+      </div>
+    </div>
+
+    <!-- Section Paiement -->
+    <div class="details-section">
+      <h2>{{ 'booking.details.payment' | translate }}</h2>
+      
+      <div class="info-row">
+        <div class="info-label">{{ 'booking.details.totalPrice' | translate }}:</div>
+        <div class="info-value">{{ formatPrice(booking.totalPrice) }}</div>
+      </div>
+    </div>
+
+    <!-- Informations de création -->
+    <div class="created-info">
+      {{ 'booking.details.created' | translate }}: {{ formatDate(booking.createdAt) }}
+    </div>
+  </div>
+</div>

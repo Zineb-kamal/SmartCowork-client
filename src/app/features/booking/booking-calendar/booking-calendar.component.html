@@ -1,0 +1,60 @@
+<!-- src/app/features/booking/booking-calendar/booking-calendar.component.html -->
+<div class="calendar-container">
+    <div class="calendar-header">
+      <h1>{{ 'booking.calendar.title' | translate }}</h1>
+      
+      <div class="calendar-controls">
+        <div class="space-filter">
+          <label for="spaceFilter">{{ 'booking.calendar.filterSpace' | translate }}:</label>
+          <select id="spaceFilter" (change)="onSpaceFilterChange($event)" class="space-select">
+            <option value="all">{{ 'booking.calendar.allSpaces' | translate }}</option>
+            <option *ngFor="let space of spaces" [value]="space.id">{{ space.name }}</option>
+          </select>
+        </div>
+        
+        <button routerLink="/booking" class="btn-text">
+          <i class="fas fa-list"></i> {{ 'booking.calendar.viewList' | translate }}
+        </button>
+        
+        <button routerLink="/booking/create" class="btn-create">
+          <i class="fas fa-plus"></i> {{ 'booking.calendar.newBooking' | translate }}
+        </button>
+      </div>
+    </div>
+  
+    <div class="calendar-help">
+      <p>{{ 'booking.calendar.selectTimeHelp' | translate }}</p>
+    </div>
+  
+    <div *ngIf="loading" class="calendar-loading">
+      <div class="spinner"></div>
+      <p>{{ 'booking.calendar.loading' | translate }}</p>
+    </div>
+  
+    <div *ngIf="error" class="calendar-error">
+      <i class="fas fa-exclamation-circle"></i> {{ error }}
+    </div>
+  
+    <div *ngIf="!loading && !error" class="calendar-card">
+      <div class="legend">
+        <div class="legend-item">
+          <span class="legend-dot" style="background-color: #4CAF50"></span>
+          <span>{{ 'booking.calendar.statusConfirmed' | translate }}</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background-color: #FF9800"></span>
+          <span>{{ 'booking.calendar.statusPending' | translate }}</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background-color: #F44336"></span>
+          <span>{{ 'booking.calendar.statusCancelled' | translate }}</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background-color: #2196F3"></span>
+          <span>{{ 'booking.calendar.statusCompleted' | translate }}</span>
+        </div>
+      </div>
+      
+      <full-calendar *ngIf="!loading" [options]="calendarOptions"></full-calendar>
+    </div>
+  </div>

@@ -1,0 +1,40 @@
+<!-- Add this at the end of your page, after all other content -->
+<div class="footer">
+    <div class="newsletter-section">
+      <h3>{{ 'FOOTER.NEWSLETTER_TITLE' | translate }}</h3>
+      
+      <div class="newsletter-form">
+        <input type="email" placeholder="{{ 'FOOTER.EMAIL_PLACEHOLDER' | translate }}" class="email-input">
+        <button type="button" class="submit-button">{{ 'FOOTER.SUBSCRIBE_BUTTON' | translate }}</button>
+      </div>
+    </div>
+    
+    <div class="contact-info">
+      <a href="mailto:contact@smartcowork.com" class="contact-link">contactsmartcowork.com</a>
+      <a href="tel:+212612345678" class="contact-link">+212 612 345 678</a>
+      <p class="address">{{ 'FOOTER.ADDRESS' | translate }}</p>
+    </div>
+    
+    <div class="footer-links">
+      <a href="#" class="footer-link">{{ 'FOOTER.TERMS' | translate }}</a>
+      <a href="#" class="footer-link">{{ 'FOOTER.PRIVACY' | translate }}</a>
+    </div>
+    
+    <div class="social-links">
+      <a href="#" class="social-icon whatsapp-icon" aria-label="WhatsApp"></a>
+      <a href="#" class="social-icon instagram-icon" aria-label="Instagram"></a>
+      <a href="#" class="social-icon facebook-icon" aria-label="Facebook"></a>
+      <a href="#" class="social-icon linkedin-icon" aria-label="LinkedIn"></a>
+    </div>
+    
+    <div class="copyright">
+      <p>&copy; {{ currentYear }} SmartCowork.</p>
+    </div>
+    
+    <div class="chat-button">
+      <button class="chat-toggle">
+        <span class="chat-icon"></span>
+        {{ 'FOOTER.CONTACT_US' | translate }}
+      </button>
+    </div>
+  </div>

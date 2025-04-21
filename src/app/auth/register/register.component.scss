@@ -1,0 +1,245 @@
+.register-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .register-card {
+    width: 100%;
+    max-width: 400px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    padding: 25px;
+    margin: 0 15px;
+  }
+  
+  .logo {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a8754;
+    margin-bottom: 15px;
+    margin-top: 0;
+  }
+  
+  .tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e6e6e6;
+  }
+  
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    text-decoration: none;
+    
+    &.active {
+      color: #1a8754;
+      font-weight: 500;
+      border-bottom: 2px solid #1a8754;
+    }
+    
+    &:hover:not(.active) {
+      color: #333;
+    }
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    
+    .form-field {
+      flex: 1;
+    }
+  }
+  
+  .form-field {
+    position: relative;
+    margin-bottom: 12px;
+  }
+  
+  .input-with-icon {
+    position: relative;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #dce1e6;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.25s ease;
+    background-color: #f8f9fa;
+    color: #333;
+    
+    &::placeholder {
+      color: #99a1a8;
+      font-size: 13px;
+    }
+    
+    &:focus {
+      outline: none;
+      border-color: #1a8754;
+      background-color: #fff;
+    }
+    
+    &.is-invalid {
+      border-color: #dc3545;
+      
+      &:focus {
+        box-shadow: 0 0 0 1px rgba(220, 53, 69, 0.15);
+      }
+    }
+  }
+  
+  .field-icon {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  
+  .email-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23555555'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207'%3E%3C/path%3E%3C/svg%3E");
+  }
+  
+  .phone-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23555555'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z'%3E%3C/path%3E%3C/svg%3E");
+  }
+  
+  .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+  
+  .eye-icon, .eye-icon-off {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.4;
+  }
+  
+  .eye-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23555555'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'%3E%3C/path%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'%3E%3C/path%3E%3C/svg%3E");
+  }
+  
+  .eye-icon-off {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23555555'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21'%3E%3C/path%3E%3C/svg%3E");
+  }
+  
+  .invalid-feedback {
+    color: #dc3545;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    padding-left: 2px;
+  }
+  
+  .register-button {
+    width: 100%;
+    background-color: #1a8754;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+    
+    &:hover:not(:disabled) {
+      background-color: #146c43;
+    }
+    
+    &:disabled {
+      background-color: #88c2a5;
+      cursor: not-allowed;
+    }
+  }
+  
+  .spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s linear infinite;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  .alert-error {
+    background-color: #fff5f5;
+    color: #e03131;
+    padding: 8px 10px;
+    border-radius: 4px;
+    border: 1px solid #ffc9c9;
+    margin-top: 15px;
+    font-size: 13px;
+  }
+  
+  .login-link {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+    
+    a {
+      color: #1a8754;
+      text-decoration: none;
+      font-weight: 500;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .register-card {
+      padding: 20px 15px;
+    }
+    
+    .form-row {
+      flex-direction: column;
+      gap: 0;
+    }
+  }

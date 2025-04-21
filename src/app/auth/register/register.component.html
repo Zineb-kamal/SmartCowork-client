@@ -1,0 +1,114 @@
+<div class="register-wrapper">
+  <div class="register-card">
+    <h1 class="logo">SmartCowork</h1>
+    
+    <div class="tabs">
+      <a class="tab" routerLink="/login">{{ 'LOGIN.TAB' | translate }}</a>
+      <a class="tab active">{{ 'REGISTER.TAB' | translate }}</a>
+    </div>
+    
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-field">
+          <input 
+            type="text" 
+            formControlName="firstName" 
+            placeholder="{{ 'REGISTER.FIRST_NAME' | translate }}"
+            [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }" />
+          <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
+            <div *ngIf="f['firstName'].errors['required']">{{ 'VALIDATION.FIRSTNAME_REQUIRED' | translate }}</div>
+          </div>
+        </div>
+        
+        <div class="form-field">
+          <input 
+            type="text" 
+            formControlName="lastName" 
+            placeholder="{{ 'REGISTER.LAST_NAME' | translate }}"
+            [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }" />
+          <div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback">
+            <div *ngIf="f['lastName'].errors['required']">{{ 'VALIDATION.LASTNAME_REQUIRED' | translate }}</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-field">
+        <div class="input-with-icon">
+          <input 
+            type="email" 
+            formControlName="email" 
+            placeholder="{{ 'REGISTER.EMAIL' | translate }}"
+            autocomplete="email"
+            [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
+          <div class="field-icon email-icon"></div>
+        </div>
+        <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+          <div *ngIf="f['email'].errors['required']">{{ 'VALIDATION.EMAIL_REQUIRED' | translate }}</div>
+          <div *ngIf="f['email'].errors['email']">{{ 'VALIDATION.EMAIL_INVALID' | translate }}</div>
+        </div>
+      </div>
+      
+      <div class="form-field">
+        <div class="input-with-icon">
+          <input 
+            type="tel" 
+            formControlName="phoneNumber" 
+            placeholder="{{ 'REGISTER.PHONE' | translate }}"
+            autocomplete="tel"
+            [ngClass]="{ 'is-invalid': submitted && f['phoneNumber'].errors }" />
+          <div class="field-icon phone-icon"></div>
+        </div>
+        <div *ngIf="submitted && f['phoneNumber'].errors" class="invalid-feedback">
+          <div *ngIf="f['phoneNumber'].errors['required']">{{ 'VALIDATION.PHONE_REQUIRED' | translate }}</div>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-field">
+          <div class="input-with-icon">
+            <input 
+              [type]="showPassword ? 'text' : 'password'" 
+              formControlName="password" 
+              placeholder="{{ 'REGISTER.PASSWORD' | translate }}"
+              autocomplete="new-password"
+              [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" />
+            <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+              <i [class]="showPassword ? 'eye-icon-off' : 'eye-icon'"></i>
+            </button>
+          </div>
+          <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+            <div *ngIf="f['password'].errors['required']">{{ 'VALIDATION.PASSWORD_REQUIRED' | translate }}</div>
+            <div *ngIf="f['password'].errors['minlength']">{{ 'VALIDATION.PASSWORD_LENGTH' | translate }}</div>
+          </div>
+        </div>
+        
+        <div class="form-field">
+          <div class="input-with-icon">
+            <input 
+              [type]="showConfirmPassword ? 'text' : 'password'" 
+              formControlName="confirmPassword" 
+              placeholder="{{ 'REGISTER.CONFIRM_PASSWORD' | translate }}"
+              autocomplete="new-password"
+              [ngClass]="{ 'is-invalid': submitted && f['confirmPassword'].errors }" />
+            <button type="button" class="toggle-password" (click)="toggleConfirmPasswordVisibility()">
+              <i [class]="showConfirmPassword ? 'eye-icon-off' : 'eye-icon'"></i>
+            </button>
+          </div>
+          <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback">
+            <div *ngIf="f['confirmPassword'].errors['required']">{{ 'VALIDATION.CONFIRM_PASSWORD_REQUIRED' | translate }}</div>
+            <div *ngIf="f['confirmPassword'].errors['mustMatch']">{{ 'VALIDATION.PASSWORDS_MUST_MATCH' | translate }}</div>
+          </div>
+        </div>
+      </div>
+      
+      <button type="submit" class="register-button" [disabled]="loading">
+        <span *ngIf="loading" class="spinner"></span>
+        {{ 'REGISTER.SUBMIT_BUTTON' | translate }}
+      </button>
+      
+      <div *ngIf="error" class="alert-error">{{error}}</div>
+      
+     
+    </form>
+  </div>
+</div>

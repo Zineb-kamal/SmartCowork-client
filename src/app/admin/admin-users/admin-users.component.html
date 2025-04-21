@@ -1,0 +1,172 @@
+<!-- src/app/features/admin/admin-users/admin-users.component.html -->
+<div class="admin-users-container">
+    <div class="section-header">
+      <h2>{{ 'admin.users.title' | translate }}</h2>
+      <button class="add-button" (click)="openAddUserModal()">
+        <i class="fas fa-plus"></i> {{ 'admin.users.addUser' | translate }}
+      </button>
+    </div>
+    
+    <div *ngIf="success" class="success-message">
+      <i class="fas fa-check-circle"></i> {{ success }}
+    </div>
+    
+    <div *ngIf="error" class="error-message">
+      <i class="fas fa-exclamation-circle"></i> {{ error }}
+    </div>
+    
+    <div class="search-bar">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        (input)="searchUsers()" 
+        placeholder="{{ 'admin.users.searchPlaceholder' | translate }}"
+        class="search-input"
+      >
+      <i class="fas fa-search search-icon"></i>
+    </div>
+    
+    <div *ngIf="loading" class="loading-container">
+      <div class="spinner"></div>
+      <p>{{ 'admin.users.loading' | translate }}</p>
+    </div>
+    
+    <div *ngIf="!loading && filteredUsers.length === 0" class="empty-state">
+      <i class="fas fa-users user-icon"></i>
+      <p>{{ 'admin.users.noUsers' | translate }}</p>
+    </div>
+    
+    <div *ngIf="!loading && filteredUsers.length > 0" class="users-table-container">
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th>{{ 'admin.users.name' | translate }}</th>
+            <th>{{ 'admin.users.email' | translate }}</th>
+            <th>{{ 'admin.users.role' | translate }}</th>
+            <th>{{ 'admin.users.status' | translate }}</th>
+            <th>{{ 'admin.users.actions' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of filteredUsers">
+            <td>{{ user.firstName }} {{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <span class="role-badge" [ngClass]="'role-' + user.role.toLowerCase()">
+                {{ getRoleLabel(user.role) }}
+              </span>
+            </td>
+            <td>
+              <span class="status-badge" [ngClass]="'status-' + user.status.toLowerCase()">
+                {{ user.status }}
+              </span>
+            </td>
+            <td class="actions-cell">
+              <button class="action-btn edit-btn" (click)="openEditModal(user)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="action-btn delete-btn" (click)="confirmDeleteUser(user)">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Modal d'édition -->
+    <div *ngIf="showModal" class="modal-overlay">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3>{{ editingUser ? ('admin.users.editUser' | translate) : ('admin.users.addUser' | translate) }}</h3>
+          <button class="close-btn" (click)="closeModal()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+          <form [formGroup]="userForm" (ngSubmit)="saveUser()">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">{{ 'admin.users.firstName' | translate }}</label>
+                <input 
+                  type="text" 
+                  id="firstName" 
+                  formControlName="firstName" 
+                  class="form-control"
+                  [ngClass]="{'is-invalid': userForm.get('firstName')?.touched && userForm.get('firstName')?.invalid}"
+                >
+                <div *ngIf="userForm.get('firstName')?.touched && userForm.get('firstName')?.invalid" class="invalid-feedback">
+                  {{ 'admin.users.firstNameRequired' | translate }}
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="lastName">{{ 'admin.users.lastName' | translate }}</label>
+                <input 
+                  type="text" 
+                  id="lastName" 
+                  formControlName="lastName" 
+                  class="form-control"
+                  [ngClass]="{'is-invalid': userForm.get('lastName')?.touched && userForm.get('lastName')?.invalid}"
+                >
+                <div *ngIf="userForm.get('lastName')?.touched && userForm.get('lastName')?.invalid" class="invalid-feedback">
+                  {{ 'admin.users.lastNameRequired' | translate }}
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">{{ 'admin.users.email' | translate }}</label>
+              <input 
+                type="email" 
+                id="email" 
+                formControlName="email" 
+                class="form-control"
+                [ngClass]="{'is-invalid': userForm.get('email')?.touched && userForm.get('email')?.invalid}"
+              >
+              <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid" class="invalid-feedback">
+                <div *ngIf="userForm.get('email')?.errors?.['required']">{{ 'admin.users.emailRequired' | translate }}</div>
+                <div *ngIf="userForm.get('email')?.errors?.['email']">{{ 'admin.users.emailInvalid' | translate }}</div>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="role">{{ 'admin.users.role' | translate }}</label>
+                <select 
+                  id="role" 
+                  formControlName="role" 
+                  class="form-control"
+                >
+                  <option *ngFor="let role of userRoles" [value]="role.value">{{ role.label }}</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="status">{{ 'admin.users.status' | translate }}</label>
+                <select 
+                  id="status" 
+                  formControlName="status" 
+                  class="form-control"
+                >
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                  <option value="Blocked">Blocked</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn-secondary" (click)="closeModal()">
+                {{ 'admin.users.cancel' | translate }}
+              </button>
+              <button type="submit" class="btn-primary" [disabled]="userForm.invalid">
+                {{ 'admin.users.save' | translate }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

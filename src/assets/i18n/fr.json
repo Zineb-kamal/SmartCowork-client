@@ -1,0 +1,516 @@
+{
+  "admin": {
+    "dashboard": {
+      "title": "Tableau de bord administrateur",
+      "overview": "Vue d'ensemble",
+      "users": "Utilisateurs",
+      "spaces": "Espaces",
+      "bookings": "Réservations",
+      "statistics": "Statistiques",
+      "loading": "Chargement des données...",
+      "totalUsers": "Utilisateurs",
+      "totalSpaces": "Espaces",
+      "totalBookings": "Réservations",
+      "activeBookings": "Réservations actives",
+      "quickActions": "Actions rapides",
+      "addUser": "Ajouter un utilisateur",
+      "addSpace": "Ajouter un espace",
+      "manageBookings": "Gérer les réservations"
+    },
+    "users": {
+      "title": "Gestion des utilisateurs",
+      "addUser": "Ajouter un utilisateur",
+      "editUser": "Modifier l'utilisateur",
+      "searchPlaceholder": "Rechercher un utilisateur...",
+      "loading": "Chargement des utilisateurs...",
+      "noUsers": "Aucun utilisateur trouvé",
+      "name": "Nom",
+      "email": "Email",
+      "role": "Rôle",
+      "status": "Statut",
+      "actions": "Actions",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "firstNameRequired": "Le prénom est requis",
+      "lastNameRequired": "Le nom est requis",
+      "emailRequired": "L'email est requis",
+      "emailInvalid": "Format d'email invalide",
+      "cancel": "Annuler",
+      "save": "Enregistrer"
+    },
+    "spaces": {
+      "title": "Gestion des espaces",
+      "addSpace": "Ajouter un espace",
+      "editSpace": "Modifier l'espace",
+      "searchPlaceholder": "Rechercher un espace...",
+      "loading": "Chargement des espaces...",
+      "noSpaces": "Aucun espace trouvé",
+      "name": "Nom",
+      "type": "Type",
+      "capacity": "Capacité",
+      "price": "Prix",
+      "status": "Statut",
+      "actions": "Actions",
+      "description": "Description",
+      "location": "Emplacement",
+      "hourlyRate": "Tarif horaire",
+      "amenities": "Équipements",
+      "nameRequired": "Le nom est requis",
+      "descriptionRequired": "La description est requise",
+      "locationRequired": "L'emplacement est requis",
+      "cancel": "Annuler",
+      "save": "Enregistrer"
+    },
+    "bookings": {
+      "title": "Gestion des réservations",
+      "searchPlaceholder": "Rechercher une réservation...",
+      "loading": "Chargement des réservations...",
+      "noBookings": "Aucune réservation trouvée",
+      "space": "Espace",
+      "user": "Utilisateur",
+      "startTime": "Début",
+      "endTime": "Fin",
+      "status": "Statut",
+      "price": "Prix",
+      "actions": "Actions",
+      "all": "Tous",
+      "pending": "En attente",
+      "confirmed": "Confirmées",
+      "cancelled": "Annulées",
+      "completed": "Terminées",
+      "filterByStatus": "Filtrer par statut"
+    }
+  },
+  "LOGIN": {
+    "TAB": "Connexion",
+    "EMAIL_PLACEHOLDER": "Adresse email",
+    "PASSWORD_PLACEHOLDER": "Mot de passe",
+    "FORGOT_PASSWORD": "Mot de passe oublié ?",
+    "CONTINUE": "Continuer",
+    "ERROR": "Email ou mot de passe incorrect"
+  },
+  "REGISTER": {
+    "TAB": "S'inscrire",
+    "FIRST_NAME": "Prénom",
+    "LAST_NAME": "Nom",
+    "EMAIL": "Email",
+    "PHONE": "Téléphone",
+    "PASSWORD": "Mot de passe",
+    "CONFIRM_PASSWORD": "Confirmer le mot de passe",
+    "SUBMIT_BUTTON": "S'inscrire",
+    "ALREADY_HAVE_ACCOUNT": "Vous avez déjà un compte ?",
+    "LOGIN_LINK": "Connectez-vous"
+  },
+  "VALIDATION": {
+    "FIRSTNAME_REQUIRED": "Prénom requis",
+    "LASTNAME_REQUIRED": "Nom requis",
+    "EMAIL_REQUIRED": "Email requis",
+    "EMAIL_INVALID": "Veuillez entrer un email valide",
+    "PHONE_REQUIRED": "Numéro de téléphone requis",
+    "PASSWORD_REQUIRED": "Mot de passe requis",
+    "PASSWORD_LENGTH": "Le mot de passe doit comporter au moins 6 caractères",
+    "CONFIRM_PASSWORD_REQUIRED": "Veuillez confirmer votre mot de passe",
+    "PASSWORDS_MUST_MATCH": "Les mots de passe ne correspondent pas",
+    "FIELD_REQUIRED": "Ce champ est requis",
+    "MIN_VALUE": "La valeur doit être supérieure ou égale à {{value}}",
+    "MAX_LENGTH": "Ce champ ne doit pas dépasser {{length}} caractères"
+  },
+  "COMMON": {
+    "SUCCESS": "Succès",
+    "ERROR": "Erreur",
+    "SAVE": "Enregistrer",
+    "CANCEL": "Annuler",
+    "LOADING": "Chargement...",
+    "REQUIRED_FIELD": "Ce champ est obligatoire",
+    "RETRY": "Réessayer",
+    "EDIT": "Modifier",
+    "DELETE": "Supprimer",
+    "CREATE": "Créer",
+    "UPDATE": "Mettre à jour",
+    "SEARCH": "Rechercher"
+  },
+   "HEADER": {
+      "SOLUTIONS": "Solutions",
+      "LOCATIONS": "Emplacements",
+      "SPACES": "Espaces", 
+      "BOOKINGS": "Réservations",
+      "MY_BOOKINGS": "Mes réservations",
+      "CONTACT": "Contact",
+      "ABOUT": "À propos",
+      "DASHBOARD": "Tableau de bord",
+      "PROFILE": "Mon profil",
+      "LOGOUT": "Déconnexion"
+    },
+    "HOME": {
+      "TITLE": "Bienvenue dans le monde de l'espace de travail flexible.",
+      "DESCRIPTION": "Des bureaux clés en main au coworking, en passant par les salles de réunion et la technologie, explorez des solutions d'espaces de travail adaptées à toutes les tailles d'équipes.",
+      "CITY_LABEL": "Ville",
+      "SELECT_CITY": "Sélectionnez une ville",
+      "SPACE_TYPE_LABEL": "Type d'espace",
+      "ALL_SPACES": "Tous les espaces",
+      "SEARCH_BUTTON": "Commencer",
+      "LOGIN_BUTTON": "Connexion",
+      "REGISTER_BUTTON": "S'inscrire",
+      "SPACES": {
+        "TITLE": "Découvrez nos espaces de travail",
+        "SUBTITLE": "Trouvez l'espace parfait pour vos besoins, qu'il s'agisse d'un bureau pour la journée ou d'un espace privé pour votre équipe.",
+        "FROM": "À partir de",
+        "HOUR": "heure",
+        "AVAILABLE": "espaces disponibles",
+        "DISCOVER": "Découvrir",
+        "DESK": {
+          "TITLE": "Bureau individuel",
+          "DESCRIPTION": "Un bureau dédié dans un espace partagé, parfait pour un travail concentré."
+        },
+        "MEETING_ROOM": {
+          "TITLE": "Salle de réunion",
+          "DESCRIPTION": "Espaces professionnels pour les réunions d'équipe et les présentations clients."
+        },
+        "PRIVATE_OFFICE": {
+          "TITLE": "Bureau privé",
+          "DESCRIPTION": "Espace de travail fermé pour les équipes qui ont besoin d'intimité et de collaboration."
+        },
+        "CONFERENCE_ROOM": {
+          "TITLE": "Salle de conférence",
+          "DESCRIPTION": "Espaces plus grands équipés de technologie pour les rassemblements importants."
+        }
+      },"SERVICES": {
+        "TITLE": "Nos Services",
+        "SUBTITLE": "Nous proposons une gamme de services pour rendre votre journée de travail productive et confortable.",
+        "INTERNET": {
+          "TITLE": "Internet Haut Débit",
+          "DESCRIPTION": "Connexion internet fibre fiable avec systèmes de secours redondants pour vous garder connecté."
+        },
+        "MEETING": {
+          "TITLE": "Salles de Réunion",
+          "DESCRIPTION": "Salles de réunion entièrement équipées avec capacités de vidéoconférence disponibles à la demande."
+        },
+        "REFRESHMENTS": {
+          "TITLE": "Café & Rafraîchissements",
+          "DESCRIPTION": "Café premium, thé et eau filtrée gratuits disponibles tout au long de la journée."
+        },
+        "ACCESS": {
+          "TITLE": "Accès 24/7",
+          "DESCRIPTION": "Accès sécurisé à l'espace de travail à toute heure, quand l'inspiration vous frappe."
+        },
+        "PRINTING": {
+          "TITLE": "Services d'Impression",
+          "DESCRIPTION": "Services professionnels d'impression, de numérisation et de copie à portée de main."
+        },
+        "EVENTS": {
+          "TITLE": "Espaces Événementiels",
+          "DESCRIPTION": "Espaces polyvalents pour ateliers, team building et événements de réseautage."
+        }
+      }
+    },
+    "SPACES": {
+      "DISCOVER_TITLE": "Découvrez nos espaces de travail",
+      "DISCOVER_SUBTITLE": "Trouvez l'espace parfait pour vos besoins professionnels",
+      "FILTERS": {
+        "TITLE": "Filtres",
+        "TYPE": "Type d'espace",
+        "CITY": "Ville",
+        "MIN_PRICE": "Prix minimum",
+        "MAX_PRICE": "Prix maximum",
+        "ALL_CITIES": "Toutes les villes",
+        "RESET": "Réinitialiser les filtres"
+      },
+      "LOADING": "Chargement des espaces...",
+      "STATUS": {
+        "OCCUPIED": "Occupé",
+        "MAINTENANCE": "Maintenance"
+      },
+      "DETAILS_BUTTON": "Détails",
+    "ADD_NEW": "Ajouter un nouvel espace",
+    "SEARCH_PLACEHOLDER": "Rechercher un espace...",
+    "FILTER": {
+      "ALL": "Tous"
+    },
+    "TYPES": {
+      "DESK": "Bureaux",
+      "MEETING_ROOM": "Salles de réunion",
+      "PRIVATE_OFFICE": "Bureaux privés",
+      "CONFERENCE_ROOM": "Salles de conférence"
+    },
+    "PEOPLE": "personne(s)",
+    "FROM": "À partir de",
+    "CURRENCY": "MAD",
+    "HOUR": "heure",
+    "DAY": "jour",
+    "WEEK": "semaine",
+    "MONTH": "mois",
+    "YEAR": "année",
+    "VIEW_DETAILS": "Voir détails",
+    "NO_RESULTS": "Aucun espace ne correspond à votre recherche.",
+    "BACK_TO_SPACES": "Retour aux espaces",
+    "DESCRIPTION": "Description",
+    "FEATURES": "Caractéristiques",
+    "TYPE": "Type",
+    "CAPACITY": "Capacité",
+    "LOCATION": "Emplacement",
+    "PRICING": "Tarifs",
+    "BOOK_THIS_SPACE": "Réserver cet espace",
+    "BOOK_NOW": "Réserver maintenant",
+    "EDIT_SPACE": "Modifier l'espace",
+    "CREATE_SPACE": "Créer un nouvel espace",
+    "FORM": {
+      "GENERAL_INFO": "Informations générales",
+      "NAME": "Nom",
+      "DESCRIPTION": "Description",
+      "TYPE": "Type d'espace",
+      "STATUS": "Statut",
+      "CAPACITY": "Capacité",
+      "IMAGE_URL": "URL de l'image",
+      "CITY": "Ville",
+      "PRICING": "Tarification",
+      "PRICE_PER_HOUR": "Prix par heure",
+      "PRICE_PER_DAY": "Prix par jour",
+      "PRICE_PER_WEEK": "Prix par semaine",
+      "PRICE_PER_MONTH": "Prix par mois",
+      "PRICE_PER_YEAR": "Prix par année"
+    }
+  },
+    "FOOTER": {
+      "NEWSLETTER_TITLE": "Ne ratez pas nos offres du moment!",
+      "EMAIL_PLACEHOLDER": "Adresse e-mail",
+      "SUBSCRIBE_BUTTON": "Envoyer",
+      "ADDRESS": "Espace SmartCowork Business - 1er étage - Lot. Attaoufik 16/18, Sidi Maarouf, Casablanca, Maroc",
+      "TERMS": "Conditions générales",
+      "PRIVACY": "Politique de confidentialité",
+      "CONTACT_US": "Contactez-nous"
+    },
+   
+    "table": {
+      "id": "ID",
+      "space": "Espace",
+      "start": "Début",
+      "end": "Fin",
+      "price": "Prix",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+    "status": {
+      "pending": "En attente",
+      "confirmed": "Confirmée",
+      "cancelled": "Annulée",
+      "completed": "Terminée"
+    },
+    "create": {
+      "title": "Nouvelle réservation",
+      "back": "Retour",
+      "spaceLabel": "Espace",
+      "spaceCapacity": "capacité",
+      "selectSpace": "Sélectionnez un espace",
+      "startSection": "Début",
+      "endSection": "Fin",
+      "dateLabel": "Date",
+      "timeLabel": "Heure",
+      "checkAvailability": "Vérifier la disponibilité",
+      "book": "Réserver",
+      "isAvailable": "L'espace est disponible pour cette période !",
+      "notAvailable": "L'espace n'est pas disponible pour cette période",
+      "processing": "Traitement en cours...",
+      "success": "Réservation créée avec succès !",
+      "required": "requis"
+    },
+    "details": {
+      "title": "Détails de la réservation",
+      "back": "Retour à la liste",
+      "loading": "Chargement des détails...",
+      "error": "Erreur lors du chargement des détails de la réservation",
+      "bookingId": "ID de réservation :",
+      "space": "Espace :",
+      "start": "Début :",
+      "end": "Fin :",
+      "totalPrice": "Prix total :",
+      "createdAt": "Créée le :",
+      "cancel": "Annuler la réservation"
+    },
+    "errors": {
+      "connectionError": "Erreur de connexion",
+      "invalidDate": "La date/heure de fin doit être postérieure à la date/heure de début",
+      "missingFields": "Veuillez remplir tous les champs obligatoires",
+      "loginRequired": "Vous devez être connecté pour voir vos réservations",
+      "identifyUser": "Impossible d'identifier l'utilisateur",
+      "checkFirst": "Veuillez vérifier la disponibilité avant de réserver"
+    },
+    "actions": {
+      "view": "Voir détails",
+      "cancel": "Annuler"
+    }
+  ,
+  "CONTACT": {
+  "TITLE": "Contactez-nous",
+  "SUBTITLE": "Vous avez des questions ou besoin d'aide pour trouver l'espace idéal? Laissez-nous un message!",
+  "NAME": "Nom complet",
+  "NAME_REQUIRED": "Le nom est requis",
+  "EMAIL": "Email",
+  "EMAIL_REQUIRED": "L'email est requis",
+  "EMAIL_INVALID": "Veuillez entrer un email valide",
+  "PHONE": "Téléphone (optionnel)",
+  "MESSAGE": "Message",
+  "MESSAGE_REQUIRED": "Le message est requis",
+  "SUBMIT": "Envoyer",
+  "SENDING": "Envoi en cours...",
+  "SEND_ERROR": "Une erreur s'est produite lors de l'envoi du message. Veuillez réessayer ultérieurement."
+},
+"booking": {
+    "list": {
+      "title": "Mes Réservations",
+      "newBooking": "Nouvelle Réservation",
+      "searchPlaceholder": "Rechercher par espace ou motif...",
+      "loading": "Chargement des réservations...",
+      "noSearchResults": "Aucune réservation ne correspond à votre recherche",
+      "noBookings": "Vous n'avez pas encore de réservation",
+      "createBooking": "Réserver un espace",
+      "id": "ID",
+      "space": "Espace",
+      "startTime": "Début",
+      "endTime": "Fin",
+      "price": "Prix",
+      "status": "Statut",
+      "actions": "Actions",
+      "viewDetails": "Voir les détails",
+      "cancelBooking": "Annuler la réservation",
+      "error": "Erreur lors du chargement des réservations",
+      "noBooking": "Vous n'avez pas encore de réservation",
+      "noResult": "Aucune réservation ne correspond à votre recherche",
+      "bookNow": "Réserver un espace",
+       "viewCalendar": "Vue calendrier"
+    
+    
+    },
+    "create": {
+      "title": "Nouvelle réservation",
+      "back": "Retour",
+      "space": "Espace",
+      "selectSpace": "Sélectionnez un espace",
+      "start": "Début",
+      "end": "Fin",
+      "date": "Date",
+      "time": "Heure",
+      "checkAvailability": "Vérifier la disponibilité",
+      "book": "Réserver",
+      "purpose": "Motif de la réservation",
+      "attendeesCount": "Nombre de participants",
+      "bookingDetails": "Détails de la réservation",
+      "requiredField": "Champ obligatoire"
+    },"details": {
+      "title": "Détails de la réservation",
+      "back": "Retour",
+      "dateTime": "Date et heure",
+      "startTime": "Début",
+      "endTime": "Fin",
+      "spaceInfo": "Informations sur l'espace",
+      "spaceId": "ID de l'espace",
+      "spaceName": "Nom de l'espace",
+      "location": "Emplacement",
+      "payment": "Paiement",
+      "totalPrice": "Prix total",
+      "created": "Créé le",
+      "errorNoId": "ID de réservation non spécifié",
+      "errorLoading": "Impossible de charger les détails de la réservation"
+    }, "edit": {
+      "title": "Modifier la réservation",
+      "back": "Retour",
+      "loading": "Chargement des détails...",
+      "dateTime": "Date et heure",
+      "start": "Début",
+      "end": "Fin",
+      "date": "Date",
+      "time": "Heure",
+      "status": "Statut de la réservation",
+      "currentStatus": "Statut actuel",
+      "statusNote": "Seuls les administrateurs et le personnel peuvent modifier le statut d'une réservation.",
+      "checkAvailability": "Vérifier disponibilité",
+      "saveChanges": "Enregistrer les modifications",
+      "availableSuccess": "L'espace est disponible pour cette période!",
+      "notAvailable": "L'espace n'est pas disponible pour cette période",
+      "fillAllFields": "Veuillez remplir tous les champs obligatoires",
+      "fillAllDateFields": "Veuillez remplir tous les champs de date et heure",
+      "checkAvailabilityFirst": "Veuillez vérifier la disponibilité avant d'enregistrer",
+      "endAfterStart": "La date/heure de fin doit être postérieure à la date/heure de début",
+      "updateSuccess": "Réservation mise à jour avec succès!",
+      "errorNoId": "ID de réservation non spécifié",
+      "errorLoadingBooking": "Impossible de charger les détails de la réservation",
+      "errorLoadingSpaces": "Erreur lors du chargement des espaces",
+      "errorCheckingAvailability": "Erreur lors de la vérification de disponibilité",
+      "errorUpdating": "Erreur lors de la mise à jour de la réservation",
+      "dateRequired": "La date est requise",
+      "timeRequired": "L'heure est requise",
+      "spaceInfo": "Informations sur l'espace",
+      "spaceName": "Nom de l'espace",
+      "spaceId": "ID de l'espace",
+      "bookingId": "ID de réservation",
+      "createdAt": "Créée le",
+      "updatedAt": "Mise à jour le"
+    },
+    "status": {
+      "pending": "En attente",
+      "confirmed": "Confirmée",
+      "cancelled": "Annulée",
+      "completed": "Terminée"
+    }, "calendar": {
+      "title": "Calendrier des réservations",
+      "filterSpace": "Filtrer par espace",
+      "allSpaces": "Tous les espaces",
+      "viewList": "Vue liste",
+      "newBooking": "Nouvelle réservation",
+      "selectTimeHelp": "Cliquez et faites glisser pour sélectionner une plage horaire et créer une réservation",
+      "loading": "Chargement du calendrier...",
+      "statusConfirmed": "Confirmée",
+      "statusPending": "En attente",
+      "statusCancelled": "Annulée",
+      "statusCompleted": "Terminée",
+      "errorLoadingSpaces": "Erreur lors du chargement des espaces",
+      "errorLoadingBookings": "Erreur lors du chargement des réservations"
+    }
+
+  },
+  "LOCATIONS": {
+    "TITLE": "Nos emplacements",
+    "SUBTITLE": "Découvrez nos espaces de coworking disponibles dans plusieurs villes",
+    "SEARCH_PLACEHOLDER": "Rechercher par ville, adresse ou nom d'emplacement",
+    "ALL_CITIES": "Toutes les villes",
+    "SPACES": "espaces",
+    "VIEW_SPACES": "Voir les espaces",
+    "NO_RESULTS": "Aucun emplacement ne correspond à votre recherche",
+    "RESET_FILTERS": "Réinitialiser les filtres",
+  "BOOK_NOW": "Réserver maintenant",
+  "ADDRESS": "Adresse",
+  "VIEW_ON_MAP": "Voir sur la carte",
+  "AMENITIES": "Équipements",
+  "OPENING_HOURS": "Horaires d'ouverture",
+  "CONTACT": "Contact"
+  },
+  "PROFILE": {
+    "TITLE": "Mon profil",
+    "FIRST_NAME": "Prénom",
+    "LAST_NAME": "Nom",
+    "EMAIL": "Email",
+    "EMAIL_CANNOT_CHANGE": "L'adresse email ne peut pas être modifiée",
+    "PHONE": "Téléphone",
+    "EDIT_BUTTON": "Modifier le profil",
+    "UPDATE_SUCCESS": "Profil mis à jour avec succès",
+    "ACCOUNT_INFO": "Informations du compte",
+    "MEMBER_SINCE": "Membre depuis",
+    "STATUS": "Statut"
+  },
+
+  "STATUS": {
+    "ACTIVE": "Actif",
+    "INACTIVE": "Inactif",
+    "BLOCKED": "Bloqué"
+  },
+  "ROLE": {
+    "ADMIN": "Administrateur",
+    "STAFF": "Personnel",
+    "MEMBER": "Membre"
+  }
+}
+
+
+
+  
+    
+  

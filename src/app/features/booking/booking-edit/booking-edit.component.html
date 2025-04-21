@@ -1,0 +1,138 @@
+<!-- src/app/features/booking/booking-edit/booking-edit.component.html -->
+<div class="booking-edit-container">
+  <div class="page-header">
+    <h1>{{ 'booking.edit.title' | translate }}</h1>
+    <button (click)="goBack()" class="btn-text">
+      <i class="fas fa-arrow-left"></i> {{ 'booking.edit.back' | translate }}
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p>{{ 'booking.edit.loading' | translate }}</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <i class="fas fa-exclamation-circle"></i> {{ error }}
+  </div>
+
+  <div *ngIf="success" class="success-message">
+    <i class="fas fa-check-circle"></i> {{ success }}
+  </div>
+
+  <div *ngIf="!loading && originalBooking" class="edit-card">
+    <div class="space-info">
+      <div class="space-name">{{ spaceName }}</div>
+      <div class="booking-id">ID: {{ bookingId }}</div>
+    </div>
+
+    <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+      <!-- Section statut (visible uniquement pour admin et staff) -->
+      <div *ngIf="canChangeStatus" class="form-section">
+        <h2>{{ 'booking.edit.status' | translate }}</h2>
+        <div class="form-group">
+          <label for="status">{{ 'booking.edit.currentStatus' | translate }}</label>
+          <select id="status" formControlName="status" class="form-control status-select">
+            <option *ngFor="let status of bookingStatuses" [value]="status.value">
+              {{ status.label | translate }}
+            </option>
+          </select>
+          <p class="status-note">{{ 'booking.edit.statusNote' | translate }}</p>
+        </div>
+      </div>
+
+      <!-- Date et heure -->
+      <div class="form-section">
+        <h2>{{ 'booking.edit.dateTime' | translate }}</h2>
+        
+        <div class="date-time-container">
+          <div class="date-time-group">
+            <h3>{{ 'booking.edit.start' | translate }}</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="startDate">{{ 'booking.edit.date' | translate }}</label>
+                <input 
+                  type="date" 
+                  id="startDate" 
+                  formControlName="startDate" 
+                  class="form-control"
+                  [ngClass]="{'is-invalid': bookingForm.get('startDate')?.touched && bookingForm.get('startDate')?.invalid}"
+                >
+                <div *ngIf="bookingForm.get('startDate')?.touched && bookingForm.get('startDate')?.invalid" class="invalid-feedback">
+                  {{ 'booking.edit.dateRequired' | translate }}
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="startTime">{{ 'booking.edit.time' | translate }}</label>
+                <input 
+                  type="time" 
+                  id="startTime" 
+                  formControlName="startTime" 
+                  class="form-control"
+                  [ngClass]="{'is-invalid': bookingForm.get('startTime')?.touched && bookingForm.get('startTime')?.invalid}"
+                >
+                <div *ngIf="bookingForm.get('startTime')?.touched && bookingForm.get('startTime')?.invalid" class="invalid-feedback">
+                  {{ 'booking.edit.timeRequired' | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="date-time-group">
+            <h3>{{ 'booking.edit.end' | translate }}</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="endDate">{{ 'booking.edit.date' | translate }}</label>
+                <input 
+                  type="date" 
+                  id="endDate" 
+                  formControlName="endDate" 
+                  class="form-control"
+                  [ngClass]="{'is-invalid': bookingForm.get('endDate')?.touched && bookingForm.get('endDate')?.invalid}"
+                >
+                <div *ngIf="bookingForm.get('endDate')?.touched && bookingForm.get('endDate')?.invalid" class="invalid-feedback">
+                  {{ 'booking.edit.dateRequired' | translate }}
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="endTime">{{ 'booking.edit.time' | translate }}</label>
+                <input 
+                  type="time" 
+                  id="endTime" 
+                  formControlName="endTime" 
+                  class="form-control"
+                  [ngClass]="{'is-invalid': bookingForm.get('endTime')?.touched && bookingForm.get('endTime')?.invalid}"
+                >
+                <div *ngIf="bookingForm.get('endTime')?.touched && bookingForm.get('endTime')?.invalid" class="invalid-feedback">
+                  {{ 'booking.edit.timeRequired' | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Boutons d'action -->
+      <div class="form-actions">
+        <button 
+          type="button" 
+          (click)="checkAvailability()" 
+          class="btn-secondary"
+          [disabled]="loading"
+        >
+          <i class="fas fa-calendar-check"></i> {{ 'booking.edit.checkAvailability' | translate }}
+        </button>
+        
+        <button 
+          type="submit" 
+          class="btn-primary"
+          [disabled]="loading || (areDatesChanged() && !availabilityChecked) || (areDatesChanged() && !isAvailable)"
+        >
+          <i class="fas fa-save"></i> {{ 'booking.edit.saveChanges' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

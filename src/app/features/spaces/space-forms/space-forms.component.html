@@ -1,0 +1,201 @@
+<!-- src/app/features/spaces/space-forms/space-forms.component.html -->
+<div class="space-form-container">
+    <h1>{{ isEditMode ? ('SPACES.EDIT_SPACE' | translate) : ('SPACES.CREATE_SPACE' | translate) }}</h1>
+    
+    <div class="success-message" *ngIf="successMessage">
+      {{ successMessage }}
+    </div>
+    <!-- Loader -->
+    <div class="loader-container" *ngIf="isLoading">
+      <div class="loader"></div>
+      <p>{{ 'COMMON.LOADING' | translate }}</p>
+    </div>
+    
+    <!-- Message d'erreur -->
+    <div class="error-message" *ngIf="error">
+      {{ error }}
+    </div>
+    
+    <form [formGroup]="spaceForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
+      <div class="form-section">
+        <h2>{{ 'SPACES.FORM.GENERAL_INFO' | translate }}</h2>
+        
+        <div class="form-group">
+          <label for="name">{{ 'SPACES.FORM.NAME' | translate }} *</label>
+          <input 
+            type="text" 
+            id="name" 
+            formControlName="name"
+            [class.is-invalid]="spaceForm.get('name')?.invalid && spaceForm.get('name')?.touched"
+          >
+          <div class="invalid-feedback" *ngIf="spaceForm.get('name')?.invalid && spaceForm.get('name')?.touched">
+            <span *ngIf="spaceForm.get('name')?.hasError('required')">{{ 'VALIDATION.FIELD_REQUIRED' | translate }}</span>
+            <span *ngIf="spaceForm.get('name')?.hasError('maxlength')">{{ 'VALIDATION.MAX_LENGTH' | translate:{ length: 100 } }}</span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="description">{{ 'SPACES.FORM.DESCRIPTION' | translate }} *</label>
+          <textarea 
+            id="description" 
+            formControlName="description" 
+            rows="4"
+            [class.is-invalid]="spaceForm.get('description')?.invalid && spaceForm.get('description')?.touched"
+          ></textarea>
+          <div class="invalid-feedback" *ngIf="spaceForm.get('description')?.invalid && spaceForm.get('description')?.touched">
+            <span *ngIf="spaceForm.get('description')?.hasError('required')">{{ 'VALIDATION.FIELD_REQUIRED' | translate }}</span>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="type">{{ 'SPACES.FORM.TYPE' | translate }} *</label>
+            <select 
+              id="type" 
+              formControlName="type"
+              [class.is-invalid]="spaceForm.get('type')?.invalid && spaceForm.get('type')?.touched"
+            >
+              <option *ngFor="let type of spaceTypes" [value]="type">
+                {{ getSpaceTypeName(type) }}
+              </option>
+            </select>
+            <div class="invalid-feedback" *ngIf="spaceForm.get('type')?.invalid && spaceForm.get('type')?.touched">
+              <span *ngIf="spaceForm.get('type')?.hasError('required')">{{ 'VALIDATION.FIELD_REQUIRED' | translate }}</span>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="status">{{ 'SPACES.FORM.STATUS' | translate }} *</label>
+            <select 
+              id="status" 
+              formControlName="status"
+              [class.is-invalid]="spaceForm.get('status')?.invalid && spaceForm.get('status')?.touched"
+            >
+              <option *ngFor="let status of spaceStatuses" [value]="status">
+                {{ getStatusName(status) }}
+              </option>
+            </select>
+            <div class="invalid-feedback" *ngIf="spaceForm.get('status')?.invalid && spaceForm.get('status')?.touched">
+              <span *ngIf="spaceForm.get('status')?.hasError('required')">{{ 'VALIDATION.FIELD_REQUIRED' | translate }}</span>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="capacity">{{ 'SPACES.FORM.CAPACITY' | translate }} *</label>
+            <input 
+              type="number" 
+              id="capacity" 
+              formControlName="capacity" 
+              min="1"
+              [class.is-invalid]="spaceForm.get('capacity')?.invalid && spaceForm.get('capacity')?.touched"
+            >
+            <div class="invalid-feedback" *ngIf="spaceForm.get('capacity')?.invalid && spaceForm.get('capacity')?.touched">
+              <span *ngIf="spaceForm.get('capacity')?.hasError('required')">{{ 'VALIDATION.FIELD_REQUIRED' | translate }}</span>
+              <span *ngIf="spaceForm.get('capacity')?.hasError('min')">{{ 'VALIDATION.MIN_VALUE' | translate:{ value: 1 } }}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="imageUrl">{{ 'SPACES.FORM.IMAGE_URL' | translate }}</label>
+          <input type="text" id="imageUrl" formControlName="imageUrl">
+        </div>
+        
+        <div class="form-group">
+          <label for="city">{{ 'SPACES.FORM.CITY' | translate }}</label>
+          <input type="text" id="city" formControlName="city">
+        </div>
+      </div>
+      
+      <div class="form-section">
+        <h2>{{ 'SPACES.FORM.PRICING' | translate }}</h2>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="pricePerHour">{{ 'SPACES.FORM.PRICE_PER_HOUR' | translate }} *</label>
+            <input 
+              type="number" 
+              id="pricePerHour" 
+              formControlName="pricePerHour" 
+              min="0"
+              [class.is-invalid]="spaceForm.get('pricePerHour')?.invalid && spaceForm.get('pricePerHour')?.touched"
+            >
+            <div class="invalid-feedback" *ngIf="spaceForm.get('pricePerHour')?.invalid && spaceForm.get('pricePerHour')?.touched">
+              <span *ngIf="spaceForm.get('pricePerHour')?.hasError('required')">{{ 'VALIDATION.FIELD_REQUIRED' | translate }}</span>
+              <span *ngIf="spaceForm.get('pricePerHour')?.hasError('min')">{{ 'VALIDATION.MIN_VALUE' | translate:{ value: 0 } }}</span>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="pricePerDay">{{ 'SPACES.FORM.PRICE_PER_DAY' | translate }} *</label>
+            <input 
+              type="number" 
+              id="pricePerDay" 
+              formControlName="pricePerDay" 
+              min="0"
+              [class.is-invalid]="spaceForm.get('pricePerDay')?.invalid && spaceForm.get('pricePerDay')?.touched"
+            >
+            <div class="invalid-feedback" *ngIf="spaceForm.get('pricePerDay')?.invalid && spaceForm.get('pricePerDay')?.touched">
+              <span *ngIf="spaceForm.get('pricePerDay')?.hasError('required')">{{ 'VALIDATION.FIELD_REQUIRED' | translate }}</span>
+              <span *ngIf="spaceForm.get('pricePerDay')?.hasError('min')">{{ 'VALIDATION.MIN_VALUE' | translate:{ value: 0 } }}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="pricePerWeek">{{ 'SPACES.FORM.PRICE_PER_WEEK' | translate }} *</label>
+            <input 
+              type="number" 
+              id="pricePerWeek" 
+              formControlName="pricePerWeek" 
+              min="0"
+              [class.is-invalid]="spaceForm.get('pricePerWeek')?.invalid && spaceForm.get('pricePerWeek')?.touched"
+            >
+            <div class="invalid-feedback" *ngIf="spaceForm.get('pricePerWeek')?.invalid && spaceForm.get('pricePerWeek')?.touched">
+              <span *ngIf="spaceForm.get('pricePerWeek')?.hasError('required')">{{ 'VALIDATION.FIELD_REQUIRED' | translate }}</span>
+              <span *ngIf="spaceForm.get('pricePerWeek')?.hasError('min')">{{ 'VALIDATION.MIN_VALUE' | translate:{ value: 0 } }}</span>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="pricePerMonth">{{ 'SPACES.FORM.PRICE_PER_MONTH' | translate }} *</label>
+            <input 
+              type="number" 
+              id="pricePerMonth" 
+              formControlName="pricePerMonth" 
+              min="0"
+              [class.is-invalid]="spaceForm.get('pricePerMonth')?.invalid && spaceForm.get('pricePerMonth')?.touched"
+            >
+            <div class="invalid-feedback" *ngIf="spaceForm.get('pricePerMonth')?.invalid && spaceForm.get('pricePerMonth')?.touched">
+              <span *ngIf="spaceForm.get('pricePerMonth')?.hasError('required')">{{ 'VALIDATION.FIELD_REQUIRED' | translate }}</span>
+              <span *ngIf="spaceForm.get('pricePerMonth')?.hasError('min')">{{ 'VALIDATION.MIN_VALUE' | translate:{ value: 0 } }}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="pricePerYear">{{ 'SPACES.FORM.PRICE_PER_YEAR' | translate }} *</label>
+          <input 
+            type="number" 
+            id="pricePerYear" 
+            formControlName="pricePerYear" 
+            min="0"
+            [class.is-invalid]="spaceForm.get('pricePerYear')?.invalid && spaceForm.get('pricePerYear')?.touched"
+          >
+          <div class="invalid-feedback" *ngIf="spaceForm.get('pricePerYear')?.invalid && spaceForm.get('pricePerYear')?.touched">
+            <span *ngIf="spaceForm.get('pricePerYear')?.hasError('required')">{{ 'VALIDATION.FIELD_REQUIRED' | translate }}</span>
+            <span *ngIf="spaceForm.get('pricePerYear')?.hasError('min')">{{ 'VALIDATION.MIN_VALUE' | translate:{ value: 0 } }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" routerLink="/spaces">{{ 'COMMON.CANCEL' | translate }}</button>
+        <button type="submit" class="btn-submit" [disabled]="isSubmitting">
+          <span *ngIf="isSubmitting" class="spinner"></span>
+          {{ isEditMode ? ('COMMON.UPDATE' | translate) : ('COMMON.CREATE' | translate) }}
+        </button>
+      </div>
+    </form>
+  </div>

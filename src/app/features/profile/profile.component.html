@@ -1,0 +1,99 @@
+<!-- src/app/features/profile/profile.component.html -->
+<div class="profile-container">
+    <div class="profile-header">
+      <h1>{{ 'PROFILE.TITLE' | translate }}</h1>
+    </div>
+  
+    <div class="profile-card">
+      <div class="user-info">
+        <div class="user-avatar">
+          <div class="avatar-placeholder">
+            {{ user?.firstName?.charAt(0) || '' }}{{ user?.lastName?.charAt(0) || '' }}
+          </div>
+        </div>
+        <div class="user-details">
+          <h2>{{ user?.firstName }} {{ user?.lastName }}</h2>
+          <span class="user-role" [ngClass]="{'admin-role': user?.role === 'Admin'}">
+            {{ 'ROLE.' + (user?.role || 'MEMBER') | translate }}
+          </span>
+          <p class="user-email">{{ user?.email }}</p>
+        </div>
+      </div>
+  
+      <div class="action-buttons" *ngIf="!isEditMode">
+        <button class="btn-primary" (click)="toggleEditMode()">
+          <i class="fas fa-edit"></i> {{ 'PROFILE.EDIT_BUTTON' | translate }}
+        </button>
+      </div>
+  
+      <div *ngIf="success" class="success-message">
+        <i class="fas fa-check-circle"></i>
+        {{ 'PROFILE.UPDATE_SUCCESS' | translate }}
+      </div>
+  
+      <div *ngIf="error" class="error-message">
+        <i class="fas fa-exclamation-circle"></i>
+        {{ error }}
+      </div>
+  
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" *ngIf="isEditMode">
+        <div class="form-group">
+          <label for="firstName">{{ 'PROFILE.FIRST_NAME' | translate }}</label>
+          <input type="text" id="firstName" formControlName="firstName" class="form-control">
+          <div *ngIf="profileForm.get('firstName')!.invalid && profileForm.get('firstName')!.touched" class="error-text">
+            {{ 'VALIDATION.REQUIRED' | translate }}
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="lastName">{{ 'PROFILE.LAST_NAME' | translate }}</label>
+          <input type="text" id="lastName" formControlName="lastName" class="form-control">
+          <div *ngIf="profileForm.get('lastName')!.invalid && profileForm.get('lastName')!.touched" class="error-text">
+            {{ 'VALIDATION.REQUIRED' | translate }}
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="email">{{ 'PROFILE.EMAIL' | translate }}</label>
+          <input type="email" id="email" formControlName="email" class="form-control disabled">
+          <small>{{ 'PROFILE.EMAIL_CANNOT_CHANGE' | translate }}</small>
+        </div>
+  
+        <div class="form-group">
+          <label for="phoneNumber">{{ 'PROFILE.PHONE' | translate }}</label>
+          <input type="tel" id="phoneNumber" formControlName="phoneNumber" class="form-control">
+          <div *ngIf="profileForm.get('phoneNumber')!.invalid && profileForm.get('phoneNumber')!.touched" class="error-text">
+            {{ 'VALIDATION.INVALID_PHONE' | translate }}
+          </div>
+        </div>
+  
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="toggleEditMode()">
+            {{ 'COMMON.CANCEL' | translate }}
+          </button>
+          <button type="submit" class="btn-primary" [disabled]="profileForm.invalid || loading">
+            <i class="fas fa-save"></i> {{ 'COMMON.SAVE' | translate }}
+          </button>
+        </div>
+      </form>
+  
+      <!-- Autres sections du profil -->
+      <div class="profile-section" *ngIf="!isEditMode">
+        <h3>{{ 'PROFILE.ACCOUNT_INFO' | translate }}</h3>
+        <div class="info-item">
+          <span class="info-label">{{ 'PROFILE.MEMBER_SINCE' | translate }}</span>
+          <span class="info-value">{{ user?.createdAt | date:'longDate' }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">{{ 'PROFILE.STATUS' | translate }}</span>
+          <span class="info-value status-badge" [ngClass]="{'active': user?.status === 'Active'}">
+            {{ 'STATUS.' + (user?.status || 'ACTIVE') | translate }}
+          </span>
+        </div>
+        <div class="info-item" *ngIf="user?.phoneNumber">
+          <span class="info-label">{{ 'PROFILE.PHONE' | translate }}</span>
+          <span class="info-value">{{ user?.phoneNumber }}</span>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,72 @@
+<div class="location-container">
+  <div class="location-header">
+    <h1>{{ 'LOCATIONS.TITLE' | translate }}</h1>
+    <p class="subtitle">{{ 'LOCATIONS.SUBTITLE' | translate }}</p>
+  </div>
+
+  <div *ngIf="loading" class="loading-indicator">
+    <div class="spinner"></div>
+    <p>{{ 'COMMON.LOADING' | translate }}</p>
+  </div>
+
+  <div *ngIf="!loading" class="location-content">
+    <div class="location-image">
+      <img [src]="location!.image" alt="SmartCowork Casablanca" onerror="this.src=''">
+      <div class="location-spaces-count">{{ location!.spacesCount }} {{ 'LOCATIONS.SPACES' | translate }}</div>
+    </div>
+    
+    <div class="location-details">
+      <h2>{{ location!.name }}</h2>
+      
+      <div class="address-section">
+        <h3>{{ 'LOCATIONS.ADDRESS' | translate }}</h3>
+        <p class="address">
+          <i class="fas fa-map-marker-alt"></i> 
+          {{ location!.address }}, {{ location!.postalCode }} {{ location!.city }}, {{ location!.country }}
+        </p>
+        <a href="https://maps.google.com/?q={{ location!.address }}, {{ location!.city }}, {{ location!.country }}" 
+           target="_blank" class="map-link">
+          <i class="fas fa-external-link-alt"></i> {{ 'LOCATIONS.VIEW_ON_MAP' | translate }}
+        </a>
+      </div>
+      
+      <div class="description-section">
+        <p>{{ location!.description }}</p>
+      </div>
+      
+      <div class="features-section">
+        <h3>{{ 'LOCATIONS.AMENITIES' | translate }}</h3>
+        <div class="features-grid">
+          <div class="feature-item" *ngFor="let feature of location!.features">
+            <i class="fas fa-check-circle"></i>
+            <span>{{ feature }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="info-sections">
+        <div class="hours-section">
+          <h3>{{ 'LOCATIONS.OPENING_HOURS' | translate }}</h3>
+          <ul class="hours-list">
+            <li *ngFor="let hours of location!.openingHours">{{ hours }}</li>
+          </ul>
+        </div>
+        
+        <div class="contact-section">
+          <h3>{{ 'LOCATIONS.CONTACT' | translate }}</h3>
+          <p><i class="fas fa-phone"></i> {{ location!.contactInfo }}</p>
+          <p><i class="fas fa-envelope"></i> <a href="mailto:contact@smartcowork.com" class="contact-link">contactsmartcowork.com</a></p>
+        </div>
+      </div>
+      
+      <div class="actions-section">
+        <a [routerLink]="['/spaces']" [queryParams]="{locationId: location!.id}" class="view-spaces-btn">
+          <i class="fas fa-th-large"></i> {{ 'LOCATIONS.VIEW_SPACES' | translate }}
+        </a>
+        <a [routerLink]="['/booking/create']" [queryParams]="{locationId: location!.id}" class="book-now-btn">
+          <i class="fas fa-calendar-check"></i> {{ 'LOCATIONS.BOOK_NOW' | translate }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
