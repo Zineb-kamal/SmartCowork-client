@@ -1,6 +1,23 @@
 # SmartcoworkClient
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
+Angular-based frontend for the SmartCowork coworking space management system.
+
+## Features
+
+- User authentication and profile management
+- Space browsing and filtering
+- Booking management
+- Billing and payment integration
+- Admin dashboard for space management
+
+## Technologies
+
+- Angular 15
+- Angular Material UI
+- RxJS
+- TypeScript
+- SCSS
+- JWT Authentication
 
 ## Development server
 
