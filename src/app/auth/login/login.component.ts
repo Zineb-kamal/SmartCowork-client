@@ -39,9 +39,9 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
     
     // Rediriger vers le tableau de bord si déjà connecté
-    // if (this.authService.isLoggedIn()) {
-    //   this.router.navigate([this.returnUrl]);
-    // }
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate([this.returnUrl]);
+    }
   }
 
   // Getter pratique pour accéder facilement aux contrôles du formulaire dans le template

@@ -204,8 +204,11 @@
       }
     },
     "SPACES": {
-      "DISCOVER_TITLE": "Découvrez nos espaces de travail",
+      "ADD_NEW_SPACE": "Ajouter un nouvel espace",
+      "DISCOVER_TITLE": "Découvrez nos espaces",
       "DISCOVER_SUBTITLE": "Trouvez l'espace parfait pour vos besoins professionnels",
+      "CREATE_NEW_SPACE": "Créer un nouvel espace",
+      "DETAILS_BUTTON": "Détails",   
       "FILTERS": {
         "TITLE": "Filtres",
         "TYPE": "Type d'espace",
@@ -220,7 +223,7 @@
         "OCCUPIED": "Occupé",
         "MAINTENANCE": "Maintenance"
       },
-      "DETAILS_BUTTON": "Détails",
+
     "ADD_NEW": "Ajouter un nouvel espace",
     "SEARCH_PLACEHOLDER": "Rechercher un espace...",
     "FILTER": {
@@ -257,11 +260,14 @@
       "GENERAL_INFO": "Informations générales",
       "NAME": "Nom",
       "DESCRIPTION": "Description",
-      "TYPE": "Type d'espace",
+      "TYPE": "Type",
       "STATUS": "Statut",
       "CAPACITY": "Capacité",
-      "IMAGE_URL": "URL de l'image",
+      "IMAGE": "Image",
       "CITY": "Ville",
+      "SELECT_IMAGE": "Sélectionner une image",
+      "CHANGE_IMAGE": "Changer l'image",
+      "REMOVE_IMAGE": "Supprimer l'image",
       "PRICING": "Tarification",
       "PRICE_PER_HOUR": "Prix par heure",
       "PRICE_PER_DAY": "Prix par jour",

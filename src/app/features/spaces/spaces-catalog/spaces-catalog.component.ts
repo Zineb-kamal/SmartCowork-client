@@ -2,10 +2,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { SpacesService } from '../../../core/services/space.service';
 import { Space, SpaceType } from '../../../core/models/space.model';
 import { TranslateModule } from '@ngx-translate/core';
+import { AuthService } from '../../../core/services/auth.service';
+import { environment } from '../../../../environments/environment';
+
 
 @Component({
   selector: 'app-spaces-catalog',
@@ -19,6 +22,8 @@ export class SpacesCatalogComponent implements OnInit {
   filteredSpaces: Space[] = [];
   loading = true;
   error = '';
+  isAdmin = false;
+  environment = environment;
   
   // Filtres
   selectedType: string = '';
@@ -37,10 +42,16 @@ export class SpacesCatalogComponent implements OnInit {
   
   cities: string[] = [];
 
-  constructor(private spacesService: SpacesService) { }
+  constructor (
+    private route: ActivatedRoute,
+    private router: Router,
+    private spacesService: SpacesService, 
+    private authService: AuthService
+   ) { }
 
   ngOnInit(): void {
     this.loadSpaces();
+    this.checkAdminRole();
   }
 
   loadSpaces(): void {
@@ -100,5 +111,26 @@ export class SpacesCatalogComponent implements OnInit {
   getSpaceTypeLabel(type: number): string {
     const spaceType = this.spaceTypes.find(t => t.value === type.toString());
     return spaceType ? spaceType.label : '';
+  }
+  checkAdminRole(): void {
+    if(this.authService.isAdmin())
+      this.isAdmin=true;
+  }
+  buildImageUrl(imageUrl: string): string {
+    if (!imageUrl) {
+      console.warn('URL d\'image manquante');
+      return 'https://via.placeholder.com/300x200?text=Espace+de+travail';
+    }
+
+      environment.apiUrl = environment.apiUrl.replace('/api', '');
+    
+    const fullUrl = `${environment.apiUrl}${imageUrl.startsWith('/') ? '' : '/'}${imageUrl}`;
+    return fullUrl;
+  }
+  
+  handleImageError(event: any): void {
+    console.log("Erreur de chargement de l'image:", event.target.src);
+    // Utiliser une image générique relative à l'espace
+    event.target.src = 'https://via.placeholder.com/300x200?text=Espace+de+travail';
   }
 }

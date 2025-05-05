@@ -190,3 +190,92 @@
     background-color: #d4edda;
     margin: 20px 0;
   }
+  .image-upload-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+    
+    .image-preview {
+      width: 100%;
+      max-width: 300px;
+      height: 200px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      overflow: hidden;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    
+    .image-upload-actions {
+      display: flex;
+      gap: 10px;
+      
+      .btn-upload {
+        background-color: #2e7d32;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 15px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        
+        i {
+          margin-right: 5px;
+        }
+        
+        &:hover {
+          background-color: #1b5e20;
+        }
+      }
+      
+      .btn-remove {
+        background-color: #d32f2f;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 15px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        
+        i {
+          margin-right: 5px;
+        }
+        
+        &:hover {
+          background-color: #b71c1c;
+        }
+      }
+    }
+  }
+  
+  .admin-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    
+    .add-space-btn {
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      
+      i {
+        margin-right: 5px;
+      }
+      
+      &:hover {
+        background-color: #1b5e20;
+      }
+    }
+  }

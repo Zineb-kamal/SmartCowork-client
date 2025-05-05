@@ -10,6 +10,7 @@ import { SpacesService } from '../../../core/services/space.service';
 import { BookingCreateDto } from '../../../core/models/booking.model';
 import { TranslateModule } from '@ngx-translate/core';
 import { SpaceStatus } from '../../../core/models/space.model';
+import { BillingService } from '../../billing/services/billing.service';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class BookingCreateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private bookingService: BookingService,
+    private billingService: BillingService,
     private spaceService: SpacesService,
     private authService: AuthService,
     private router: Router,
@@ -140,14 +142,27 @@ export class BookingCreateComponent implements OnInit {
     
     this.loading = true;
     this.bookingService.createBooking(booking).subscribe({
-      next: () => {
-        this.loading = false;
+      next: (createdBooking) => {
         this.success = 'Réservation créée avec succès!';
         
-        // Redirection après un court délai
+        // Attendre un moment pour laisser le temps au service de facturation de créer la facture
         setTimeout(() => {
-          this.router.navigate(['/booking']);
-        }, 1500);
+          // Essayer de récupérer la facture associée à cette réservation
+          this.billingService.getInvoiceByBookingId(createdBooking.id).subscribe({
+            next: (invoice) => {
+              this.loading = false;
+              // Rediriger vers la page de détails de la facture
+             // Dans la méthode onSubmit de booking-create.component.ts
+this.router.navigate(['/billing/invoice', invoice.id], { queryParams: { fromBooking: 'true' } });
+            },
+            error: (err: any) => {
+              console.error('Error finding invoice', err);
+              this.loading = false;
+              // En cas d'erreur, rediriger vers la liste des factures
+              this.router.navigate(['/billing']);
+            }
+          });
+        }, 2000); // Attendre 2 secondes pour donner le temps au traitement asynchrone
       },
       error: (err) => {
         this.loading = false;

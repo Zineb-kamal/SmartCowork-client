@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Booking, BookingCreateDto, BookingUpdateDto } from '../models/booking.model';
+import { Invoice } from '../models/billing.model';
 
 @Injectable({
   providedIn: 'root'
@@ -64,4 +65,5 @@ checkAvailabilityExcluding(spaceId: string, startTime: Date, endTime: Date, excl
   // Utiliser le même endpoint existant
   return this.http.get<boolean>(`${this.apiUrl}/check-availability`, { params });
 }
+
 }

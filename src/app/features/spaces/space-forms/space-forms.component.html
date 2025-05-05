@@ -97,8 +97,38 @@
         </div>
         
         <div class="form-group">
-          <label for="imageUrl">{{ 'SPACES.FORM.IMAGE_URL' | translate }}</label>
-          <input type="text" id="imageUrl" formControlName="imageUrl">
+          <label for="imageUpload">{{ 'SPACES.FORM.IMAGE' | translate }}</label>
+          
+          <div class="image-upload-container">
+            <!-- Aperçu de l'image -->
+            <div class="image-preview" *ngIf="imagePreviewUrl">
+              <img [src]="imagePreviewUrl" alt="Aperçu de l'image">
+            </div>
+            
+            <!-- Input file caché -->
+            <input 
+              type="file" 
+              id="imageUpload" 
+              accept="image/*" 
+              (change)="onFileSelected($event)" 
+              #fileInput
+              style="display: none;"
+            >
+            
+            <!-- Boutons d'action pour l'image -->
+            <div class="image-upload-actions">
+              <button type="button" class="btn-upload" (click)="fileInput.click()">
+                <i class="fas fa-upload"></i> {{ imagePreviewUrl ? ('SPACES.FORM.CHANGE_IMAGE' | translate) : ('SPACES.FORM.SELECT_IMAGE' | translate) }}
+              </button>
+              
+              <button type="button" class="btn-remove" *ngIf="imagePreviewUrl" (click)="removeImage()">
+                <i class="fas fa-trash"></i> {{ 'SPACES.FORM.REMOVE_IMAGE' | translate }}
+              </button>
+            </div>
+          </div>
+          
+          <!-- Champ caché pour stocker l'URL -->
+          <input type="hidden" formControlName="imageUrl">
         </div>
         
         <div class="form-group">

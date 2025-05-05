@@ -1,8 +1,14 @@
 <!-- src/app/spaces/spaces-catalog/spaces-catalog.component.html -->
 <div class="spaces-container">
+  
   <div class="spaces-header">
     <h1>{{ 'SPACES.DISCOVER_TITLE' | translate }}</h1>
     <p class="spaces-subtitle">{{ 'SPACES.DISCOVER_SUBTITLE' | translate }}</p>
+  </div>
+  <div class="admin-actions" *ngIf="isAdmin">
+    <button class="add-space-btn" routerLink="/spaces/create">
+      <i class="fa fa-plus-circle"></i> Ajouter un nouvel espace
+    </button>
   </div>
   
   <div class="filters-section">
@@ -55,7 +61,12 @@
   <div class="spaces-grid">
     <div *ngFor="let space of filteredSpaces" class="space-card" [routerLink]="['/spaces', space.id]">
       <div class="space-image">
-        <img [src]="space.imageUrl || 'assets/images/desk.jpg'" [alt]="space.name">
+        <img [src]="space.imageUrl ? (buildImageUrl(space.imageUrl)) : ''" 
+        [alt]="space.name" 
+        (error)="handleImageError($event)">
+
+   <!-- Pour déboguer -->
+   <p style="font-size: 10px; color: gray;">{{environment.apiUrl + space.imageUrl}}</p>
         <div class="space-badge" *ngIf="space.status !== 0">
           {{ space.status === 1 ? ('SPACES.STATUS.OCCUPIED' | translate) : ('SPACES.STATUS.MAINTENANCE' | translate) }}
         </div>

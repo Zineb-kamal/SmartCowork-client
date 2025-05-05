@@ -45,7 +45,9 @@
       
       <div class="space-body">
         <div class="space-images">
-          <img [src]="space.imageUrl || 'assets/images/default-space.jpg'" [alt]="space.name">
+          <img [src]="space.imageUrl ? (buildImageUrl(space.imageUrl)) : ''" 
+          [alt]="space.name" 
+          (error)="handleImageError($event)">
         </div>
         
         <div class="space-info">

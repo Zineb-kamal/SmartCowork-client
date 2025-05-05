@@ -26,6 +26,7 @@ import { UserRole } from '../core/models/user.model';
           <!-- Changed this from router link to a button that shows the popup -->
           <a href="javascript:void(0)" (click)="showContactPopup($event)">{{ 'HEADER.CONTACT' | translate }}</a>
           <a [routerLink]="['/about']">{{ 'HEADER.ABOUT' | translate }}</a>
+
         </nav>
       </div>
       

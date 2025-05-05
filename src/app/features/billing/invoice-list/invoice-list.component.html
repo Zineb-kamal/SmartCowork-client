@@ -1,0 +1,72 @@
+<!-- features/billing/invoice-list/invoice-list.component.html -->
+<div class="invoice-list-container">
+    <div class="header">
+      <h1>Mes factures</h1>
+      <div class="filters">
+        <div class="search-bar">
+          <input type="text" [(ngModel)]="searchText" placeholder="Rechercher..." (keyup.enter)="onSearch()">
+          <button class="search-button" (click)="onSearch()">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        <div class="status-filter">
+          <select [(ngModel)]="selectedStatus" (change)="onStatusChange()">
+            <option *ngFor="let option of statusOptions" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="loading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Chargement des factures...</p>
+    </div>
+  
+    <div *ngIf="!loading && filteredInvoices.length === 0" class="empty-state">
+      <img src="assets/images/empty-invoices.svg" alt="Aucune facture">
+      <h2>Aucune facture trouvée</h2>
+      <p>Aucune facture ne correspond à vos critères de recherche.</p>
+    </div>
+  
+    <div *ngIf="!loading && filteredInvoices.length > 0" class="invoice-cards">
+      <div *ngFor="let invoice of filteredInvoices" class="invoice-card" (click)="viewInvoice(invoice.id)">
+        <div class="invoice-header">
+          <div class="invoice-number">Facture #{{ invoice.id.substring(0, 8) }}</div>
+          <div [class]="getStatusClass(invoice.status)">{{ invoice.status }}</div>
+        </div>
+        <div class="invoice-body">
+          <div class="invoice-details">
+            <div class="detail-row">
+              <span class="label">Date:</span>
+              <span class="value">{{ invoice.createdDate | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">Échéance:</span>
+              <span class="value">{{ invoice.dueDate | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <div class="detail-row" *ngIf="isAdmin">
+              <span class="label">Client:</span>
+              <span class="value">{{ invoice.userFullName }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">Éléments:</span>
+              <span class="value">{{ invoice.items.length }}</span>
+            </div>
+          </div>
+          <div class="invoice-amount">
+            <div class="amount">{{ invoice.totalAmount | currency:'EUR' }}</div>
+            <div class="actions">
+              <button class="btn-icon" (click)="downloadPdf(invoice.id, $event)" title="Télécharger PDF">
+                <i class="fas fa-file-pdf"></i>
+              </button>
+              <button class="btn-icon" *ngIf="invoice.status === 'Pending'" [routerLink]="['/billing/payment', invoice.id]" title="Payer" (click)="$event.stopPropagation()">
+                <i class="fas fa-credit-card"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

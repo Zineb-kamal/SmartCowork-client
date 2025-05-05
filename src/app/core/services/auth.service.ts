@@ -35,11 +35,18 @@ export class AuthService {
  hasRole(role: UserRole | string): boolean {
   return this.currentUserValue?.user.role === role;
 }
-
-// Ajouter cette méthode
 isAdmin(): boolean {
-  return this.hasRole(UserRole.Admin);
+  const currentUserResponse = this.currentUserValue;
+  return !!currentUserResponse && currentUserResponse.user.role === UserRole.Admin;
 }
+
+isStaff(): boolean {
+  const currentUserResponse = this.currentUserValue;
+  return !!currentUserResponse && currentUserResponse.user.role === UserRole.Staff;
+}
+
+
+
   // Connexion utilisateur
   login(credentials: LoginRequest): Observable<LoginResponse> {
     return this.apiService.post<LoginResponse>('user/login', credentials)

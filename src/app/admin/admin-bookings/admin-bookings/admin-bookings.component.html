@@ -1,1 +1,301 @@
-<p>admin-bookings works!</p>
+<!-- src/app/admin/admin-bookings/admin-bookings/admin-bookings.component.html -->
+<div class="admin-bookings-container">
+    <div class="section-header">
+      <h2>{{ 'admin.bookings.title' | translate }}</h2>
+      <div class="header-actions">
+        <button class="btn-primary" (click)="toggleRecommendations()">
+          <i class="fas fa-magic"></i> {{ showRecommendations ? ('admin.bookings.hideRecommendations' | translate) : ('admin.bookings.showRecommendations' | translate) }}
+        </button>
+        <button class="btn-secondary" (click)="refreshBookings()">
+          <i class="fas fa-sync-alt"></i> {{ 'admin.bookings.refresh' | translate }}
+        </button>
+      </div>
+    </div>
+    
+    <!-- AI Recommendations Panel -->
+    <div class="recommendations-panel" *ngIf="showRecommendations">
+      <div class="recommendations-header">
+        <h3>{{ 'admin.recommendations.title' | translate }}</h3>
+        <div class="confidence-legend">
+          <span class="confidence-item">
+            <i class="confidence-dot high"></i> {{ 'admin.recommendations.highConfidence' | translate }}
+          </span>
+          <span class="confidence-item">
+            <i class="confidence-dot medium"></i> {{ 'admin.recommendations.mediumConfidence' | translate }}
+          </span>
+          <span class="confidence-item">
+            <i class="confidence-dot low"></i> {{ 'admin.recommendations.lowConfidence' | translate }}
+          </span>
+        </div>
+      </div>
+      
+      <div *ngIf="loadingRecommendations" class="loading-container">
+        <div class="spinner"></div>
+        <p>{{ 'admin.recommendations.loading' | translate }}</p>
+      </div>
+      
+      <div *ngIf="!loadingRecommendations && recommendations.length === 0" class="empty-state">
+        <i class="fas fa-lightbulb empty-icon"></i>
+        <p>{{ 'admin.recommendations.noRecommendations' | translate }}</p>
+      </div>
+      
+      <div *ngIf="!loadingRecommendations && recommendations.length > 0" class="recommendations-grid">
+        <div *ngFor="let recommendation of recommendations" class="recommendation-card">
+          <div class="recommendation-header">
+            <div class="recommendation-type">
+              <i [ngClass]="getRecommendationIcon(recommendation.type)"></i>
+              {{ 'admin.recommendations.type.' + recommendation.type.toLowerCase() | translate }}
+            </div>
+            <div class="recommendation-actions">
+              <button class="icon-btn" (click)="markAsRead(recommendation.id)" *ngIf="!recommendation.isRead">
+                <i class="fas fa-check"></i>
+              </button>
+              <button class="icon-btn" (click)="deleteRecommendation(recommendation.id)">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="recommendation-content">
+            <div [ngClass]="getConfidenceBadge(recommendation.confidence)">
+              {{ getConfidenceLabel(recommendation.confidence) | translate }}
+            </div>
+            <div class="recommendation-details">
+              <ng-container *ngIf="recommendation.type === 'Space'">
+                <h4>{{ getRecommendationContent(recommendation, 'spaceName') }}</h4>
+                <p>{{ 'admin.recommendations.spaceType' | translate }}: {{ getRecommendationContent(recommendation, 'spaceType') }}</p>
+                <p>{{ 'admin.recommendations.capacity' | translate }}: {{ getRecommendationContent(recommendation, 'capacity') }}</p>
+                <p>{{ 'admin.recommendations.pricePerHour' | translate }}: {{ formatPrice(getRecommendationContent(recommendation, 'pricePerHour')) }}</p>
+                <p class="recommendation-reason">{{ getRecommendationContent(recommendation, 'reason') }}</p>
+              </ng-container>
+              
+              <ng-container *ngIf="recommendation.type === 'TimeSlot'">
+                <h4>{{ 'admin.recommendations.suggestedTimeSlot' | translate }}</h4>
+                <p>{{ 'admin.recommendations.day' | translate }}: {{ getRecommendationContent(recommendation, 'dayOfWeek') }}</p>
+                <p>{{ 'admin.recommendations.startTime' | translate }}: {{ formatTime(getRecommendationContent(recommendation, 'startTime')) }}</p>
+                <p>{{ 'admin.recommendations.endTime' | translate }}: {{ formatTime(getRecommendationContent(recommendation, 'endTime')) }}</p>
+                <p class="recommendation-reason">{{ getRecommendationContent(recommendation, 'reason') }}</p>
+              </ng-container>
+              
+              <ng-container *ngIf="recommendation.type === 'Pricing'">
+                <h4>{{ 'admin.recommendations.suggestedPricing' | translate }}</h4>
+                <p>{{ 'admin.recommendations.planType' | translate }}: {{ getRecommendationContent(recommendation, 'planType') }}</p>
+                <p>{{ 'admin.recommendations.discount' | translate }}: {{ getRecommendationContent(recommendation, 'discount') }}%</p>
+                <p class="recommendation-reason">{{ getRecommendationContent(recommendation, 'reason') }}</p>
+              </ng-container>
+            </div>
+          </div>
+          <div class="recommendation-footer">
+            <span class="recommendation-date">{{ recommendation.createdAt | date:'dd MMM yyyy' }}</span>
+            <button class="btn-small" (click)="applyRecommendation(recommendation)">
+              {{ 'admin.recommendations.apply' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Success and Error Messages -->
+    <div *ngIf="success" class="success-message">
+      <i class="fas fa-check-circle"></i> {{ success }}
+    </div>
+    
+    <div *ngIf="error" class="error-message">
+      <i class="fas fa-exclamation-circle"></i> {{ error }}
+    </div>
+    
+    <!-- Filters and Search -->
+    <div class="filters-section">
+      <div class="search-container">
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm" 
+          (input)="searchBookings()" 
+          placeholder="{{ 'admin.bookings.searchPlaceholder' | translate }}"
+          class="search-input"
+        >
+        <i class="fas fa-search search-icon"></i>
+      </div>
+      
+      <div class="filter-group">
+        <label for="statusFilter">{{ 'admin.bookings.filterByStatus' | translate }}</label>
+        <select id="statusFilter" [(ngModel)]="statusFilter" (change)="applyFilters()" class="filter-select">
+          <option value="all">{{ 'admin.bookings.all' | translate }}</option>
+          <option value="0">{{ 'admin.bookings.pending' | translate }}</option>
+          <option value="1">{{ 'admin.bookings.confirmed' | translate }}</option>
+          <option value="2">{{ 'admin.bookings.cancelled' | translate }}</option>
+          <option value="3">{{ 'admin.bookings.completed' | translate }}</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="dateFilter">{{ 'admin.bookings.filterByDate' | translate }}</label>
+        <select id="dateFilter" [(ngModel)]="dateFilter" (change)="applyFilters()" class="filter-select">
+          <option value="all">{{ 'admin.bookings.allDates' | translate }}</option>
+          <option value="today">{{ 'admin.bookings.today' | translate }}</option>
+          <option value="thisWeek">{{ 'admin.bookings.thisWeek' | translate }}</option>
+          <option value="thisMonth">{{ 'admin.bookings.thisMonth' | translate }}</option>
+        </select>
+      </div>
+    </div>
+    
+    <!-- Loading Indicator -->
+    <div *ngIf="loading" class="loading-container">
+      <div class="spinner"></div>
+      <p>{{ 'admin.bookings.loading' | translate }}</p>
+    </div>
+    
+    <!-- Empty State -->
+    <div *ngIf="!loading && filteredBookings.length === 0" class="empty-state">
+      <i class="fas fa-calendar-alt empty-icon"></i>
+      <p>{{ 'admin.bookings.noBookings' | translate }}</p>
+    </div>
+    
+    <!-- Bookings Table -->
+    <div *ngIf="!loading && filteredBookings.length > 0" class="bookings-table-container">
+      <table class="bookings-table">
+        <thead>
+          <tr>
+            <th (click)="sortBy('id')">{{ 'admin.bookings.id' | translate }} <i *ngIf="sortColumn === 'id'" [ngClass]="sortDirection === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i></th>
+            <th (click)="sortBy('spaceId')">{{ 'admin.bookings.space' | translate }} <i *ngIf="sortColumn === 'spaceId'" [ngClass]="sortDirection === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i></th>
+            <th (click)="sortBy('userName')">{{ 'admin.bookings.user' | translate }} <i *ngIf="sortColumn === 'userName'" [ngClass]="sortDirection === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i></th>
+            <th (click)="sortBy('startTime')">{{ 'admin.bookings.startTime' | translate }} <i *ngIf="sortColumn === 'startTime'" [ngClass]="sortDirection === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i></th>
+            <th (click)="sortBy('endTime')">{{ 'admin.bookings.endTime' | translate }} <i *ngIf="sortColumn === 'endTime'" [ngClass]="sortDirection === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i></th>
+            <th (click)="sortBy('totalPrice')">{{ 'admin.bookings.price' | translate }} <i *ngIf="sortColumn === 'totalPrice'" [ngClass]="sortDirection === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i></th>
+            <th (click)="sortBy('status')">{{ 'admin.bookings.status' | translate }} <i *ngIf="sortColumn === 'status'" [ngClass]="sortDirection === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i></th>
+            <th>{{ 'admin.bookings.actions' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let booking of filteredBookings">
+            <td class="booking-id">{{ booking.id | slice:0:8 }}...</td>
+            <td>{{ spaceNames[booking.spaceId] || 'Unknown Space' }}</td>
+            <td>{{ userNames[booking.userId] || 'Unknown User' }}</td>
+            <td>{{ formatDate(booking.startTime) }}</td>
+            <td>{{ formatDate(booking.endTime) }}</td>
+            <td>{{ formatPrice(booking.totalPrice) }}</td>
+            <td>
+              <span [ngClass]="'status-badge ' + getStatusClass(booking.status)">
+                {{ getStatusText(booking.status) }}
+              </span>
+            </td>
+            <td class="actions-cell">
+              <button class="action-btn view-btn" (click)="viewBookingDetails(booking)">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="action-btn edit-btn" (click)="editBooking(booking)" *ngIf="canEditBooking(booking)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="action-btn cancel-btn" (click)="confirmCancelBooking(booking)" *ngIf="canCancelBooking(booking)">
+                <i class="fas fa-ban"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Pagination -->
+    <div class="pagination-container" *ngIf="!loading && filteredBookings.length > 0">
+      <button 
+        (click)="goToPage(currentPage - 1)" 
+        [disabled]="currentPage === 1" 
+        class="pagination-btn"
+      >
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      
+      <div class="pagination-pages">
+        <ng-container *ngFor="let page of getPaginationPages()">
+          <button 
+            *ngIf="page !== '...'" 
+            (click)="goToPage(page)" 
+            [class.active]="currentPage === page" 
+            class="pagination-btn page-num"
+          >
+            {{ page }}
+          </button>
+          <span *ngIf="page === '...'" class="pagination-ellipsis">...</span>
+        </ng-container>
+      </div>
+      
+      <button 
+        (click)="goToPage(currentPage + 1)" 
+        [disabled]="currentPage === totalPages" 
+        class="pagination-btn"
+      >
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+    
+    <!-- Booking Details Modal -->
+    <div class="modal-overlay" *ngIf="showDetailsModal">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3>{{ 'admin.bookings.bookingDetails' | translate }}</h3>
+          <button class="close-btn" (click)="closeDetailsModal()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        
+        <div class="modal-body" *ngIf="selectedBooking">
+          <div class="detail-row">
+            <div class="detail-label">{{ 'admin.bookings.id' | translate }}:</div>
+            <div class="detail-value">{{ selectedBooking.id }}</div>
+          </div>
+          
+          <div class="detail-row">
+            <div class="detail-label">{{ 'admin.bookings.space' | translate }}:</div>
+            <div class="detail-value">{{ spaceNames[selectedBooking.spaceId] || 'Unknown Space' }}</div>
+          </div>
+          
+          <div class="detail-row">
+            <div class="detail-label">{{ 'admin.bookings.user' | translate }}:</div>
+            <div class="detail-value">{{ userNames[selectedBooking.userId] || 'Unknown User' }}</div>
+          </div>
+          
+          <div class="detail-row">
+            <div class="detail-label">{{ 'admin.bookings.startTime' | translate }}:</div>
+            <div class="detail-value">{{ formatDate(selectedBooking.startTime) }}</div>
+          </div>
+          
+          <div class="detail-row">
+            <div class="detail-label">{{ 'admin.bookings.endTime' | translate }}:</div>
+            <div class="detail-value">{{ formatDate(selectedBooking.endTime) }}</div>
+          </div>
+          
+          <div class="detail-row">
+            <div class="detail-label">{{ 'admin.bookings.duration' | translate }}:</div>
+            <div class="detail-value">{{ calculateDuration(selectedBooking.startTime, selectedBooking.endTime) }}</div>
+          </div>
+          
+          <div class="detail-row">
+            <div class="detail-label">{{ 'admin.bookings.price' | translate }}:</div>
+            <div class="detail-value">{{ formatPrice(selectedBooking.totalPrice) }}</div>
+          </div>
+          
+          <div class="detail-row">
+            <div class="detail-label">{{ 'admin.bookings.status' | translate }}:</div>
+            <div class="detail-value">
+              <span [ngClass]="'status-badge ' + getStatusClass(selectedBooking.status)">
+                {{ getStatusText(selectedBooking.status) }}
+              </span>
+            </div>
+          </div>
+          
+          <div class="detail-row">
+            <div class="detail-label">{{ 'admin.bookings.created' | translate }}:</div>
+            <div class="detail-value">{{ formatDate(selectedBooking.createdAt) }}</div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button class="btn-secondary" (click)="closeDetailsModal()">
+            {{ 'admin.common.close' | translate }}
+          </button>
+          <button *ngIf="canEditBooking(selectedBooking)" class="btn-primary" (click)="editBooking(selectedBooking)">
+            {{ 'admin.common.edit' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

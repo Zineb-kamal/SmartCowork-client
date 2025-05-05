@@ -106,14 +106,14 @@
 }
 
 .hero-content {
-  max-width: 1000px; // Augmenté de 800px
+  max-width: 1200px; // Augmenté de 1000px à 1200px
   padding: 60px 30px;
   text-align: center;
   margin: 0 auto;
 }
 
 .welcome-text {
-  font-size: 48px; // Augmenté de 42px
+  font-size: 48px;
   font-weight: 700;
   color: #333;
   margin-bottom: 20px;
@@ -130,7 +130,7 @@
 }
 
 .welcome-description {
-  font-size: 20px; // Augmenté de 18px
+  font-size: 20px;
   color: #666;
   margin-bottom: 30px;
   line-height: 1.5;
@@ -207,20 +207,20 @@
 
 // Spaces section
 .spaces-section {
-  padding: 80px 0; // Augmenté de 60px
+  padding: 80px 0;
   background-color: white;
   width: 100%;
 }
 
 .container {
-  max-width: 1400px; // Augmenté de 1200px
+  max-width: 1600px; // Augmenté de 1400px à 1600px
   width: 100%;
   margin: 0 auto;
   padding: 0 30px;
 }
 
 .section-title {
-  font-size: 36px; // Augmenté de 32px
+  font-size: 36px;
   font-weight: 700;
   text-align: center;
   margin-bottom: 10px;
@@ -228,11 +228,11 @@
 }
 
 .section-subtitle {
-  font-size: 20px; // Augmenté de 18px
+  font-size: 20px;
   text-align: center;
   margin-bottom: 40px;
   color: #666;
-  max-width: 800px; // Augmenté de 700px
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -276,8 +276,8 @@
 // Space types grid
 .space-types-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); // Augmenté de 250px
-  gap: 30px; // Augmenté de 25px
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
   width: 100%;
 }
 
@@ -345,15 +345,15 @@
 
 // Services section
 .services-section {
-  padding: 80px 0; // Augmenté de 60px
+  padding: 80px 0;
   background-color: #f8f9fa;
   width: 100%;
 }
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); // Augmenté de 300px
-  gap: 30px; // Augmenté de 25px
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
   margin-top: 30px;
   width: 100%;
 }
@@ -435,10 +435,55 @@
   line-height: 1.5;
 }
 
+// Hero image container styles
+.hero-image-container {
+  margin-top: 2rem;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 95%; // Augmenté de 80% à 95%
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
 // Media queries pour différentes tailles d'écran
+@media (min-width: 1800px) {
+  .container {
+    max-width: 1800px; // Encore plus grand pour les écrans très larges
+  }
+  
+  .hero-content {
+    max-width: 1400px;
+  }
+  
+  .welcome-text {
+    font-size: 56px; // Légèrement plus grand
+  }
+  
+  .space-types-grid {
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  }
+  
+  .services-grid {
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  }
+}
+
 @media (min-width: 1600px) {
   .container {
-    max-width: 1600px; // Encore plus large pour les très grands écrans
+    max-width: 1600px;
   }
   
   .hero-content {
@@ -486,6 +531,10 @@
   
   .login-btn {
     display: none;
+  }
+  
+  .hero-image-container {
+    max-width: 100%;
   }
 }
 

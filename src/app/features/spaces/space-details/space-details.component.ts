@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { SpacesService } from '../../../core/services/space.service';
 import { UserRole } from '../../../core/models/user.model';
+import { environment } from '../../../../environments/environment';
 
 
 
@@ -107,4 +108,21 @@ export class SpaceDetailsComponent implements OnInit {
     const currentUserResponse = this.authService.currentUserValue;
     return !!currentUserResponse && currentUserResponse.user.role === UserRole.Admin;
   }
+   buildImageUrl(imageUrl: string): string {
+      if (!imageUrl) {
+        console.warn('URL d\'image manquante');
+        return 'https://via.placeholder.com/300x200?text=Espace+de+travail';
+      }
+  
+        environment.apiUrl = environment.apiUrl.replace('/api', '');
+      
+      const fullUrl = `${environment.apiUrl}${imageUrl.startsWith('/') ? '' : '/'}${imageUrl}`;
+      return fullUrl;
+    }
+    
+    handleImageError(event: any): void {
+      console.log("Erreur de chargement de l'image:", event.target.src);
+      // Utiliser une image générique relative à l'espace
+      event.target.src = 'https://via.placeholder.com/300x200?text=Espace+de+travail';
+    }
 }

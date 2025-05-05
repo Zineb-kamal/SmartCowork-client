@@ -14,6 +14,7 @@ export class SpacesService {
   constructor(private http: HttpClient) { }
 
   getAllSpaces(): Observable<Space[]> {
+    
     return this.http.get<Space[]>(this.apiUrl);
   }
 
@@ -40,5 +41,20 @@ export class SpacesService {
   deleteSpace(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
-}
 
+  uploadImage(formData: FormData): Observable<any> {
+  let apiUrl = environment.apiUrl;
+  
+  if (!apiUrl.includes('/api')) {
+    apiUrl = `${apiUrl}/api`;
+  }
+
+  const fullUrl = `${apiUrl}/upload/image`.replace(/([^:]\/)\/+/g, '$1');
+  
+  console.log('URL d\'upload d\'image:', fullUrl); 
+  
+  return this.http.post<any>(fullUrl, formData);
+  
+  }
+  
+}

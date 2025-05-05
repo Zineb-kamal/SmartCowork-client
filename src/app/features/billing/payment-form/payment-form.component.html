@@ -1,0 +1,144 @@
+<!-- features/billing/payment-form/payment-form.component.html -->
+<div class="payment-form-container">
+    <div class="payment-form-card">
+      <div class="card-header">
+        <button class="btn-text" (click)="goBack()">
+          <i class="fas fa-arrow-left"></i> Retour
+        </button>
+        <h1>Paiement de facture</h1>
+      </div>
+  
+      <div *ngIf="loading" class="loading-container">
+        <div class="spinner"></div>
+        <p>Chargement des détails de la facture...</p>
+      </div>
+  
+      <div *ngIf="error" class="error-container">
+        <i class="fas fa-exclamation-circle"></i>
+        <p>{{ error }}</p>
+        <button class="btn-primary" (click)="goBack()">Retour</button>
+      </div>
+  
+      <div *ngIf="success" class="success-container">
+        <i class="fas fa-check-circle"></i>
+        <h2>Paiement réussi !</h2>
+        <p>Votre paiement a été traité avec succès.</p>
+        <p>Vous allez être redirigé vers les détails de la facture...</p>
+      </div>
+  
+      <div *ngIf="!loading && !error && !success && invoice">
+        <div class="invoice-summary">
+          <h3>Résumé de la facture</h3>
+          <div class="invoice-info">
+            <div class="invoice-row">
+              <span class="label">Numéro de facture:</span>
+              <span class="value">{{ invoice.id.substring(0, 8) }}</span>
+            </div>
+            <div class="invoice-row">
+              <span class="label">Date d'émission:</span>
+              <span class="value">{{ invoice.createdDate | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <div class="invoice-row">
+              <span class="label">Date d'échéance:</span>
+              <span class="value">{{ invoice.dueDate | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <div class="invoice-row total">
+              <span class="label">Montant total:</span>
+              <span class="value">{{ invoice.totalAmount | currency:'EUR' }}</span>
+            </div>
+          </div>
+        </div>
+  
+        <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment-form">
+          <h3>Informations de paiement</h3>
+  
+          <div class="payment-methods-container">
+            <h3>Choisissez votre mode de paiement</h3>
+            
+            <div class="payment-methods-grid">
+              <div *ngFor="let method of paymentMethods" 
+                   class="payment-method-card" 
+                   [class.active]="paymentForm.get('paymentMethod')?.value === method.value"
+                   (click)="paymentForm.get('paymentMethod')?.setValue(method.value); onPaymentMethodChange()">
+                   
+                <div class="payment-method-header">
+                  <span class="payment-method-name">{{ method.label }}</span>
+                  <i class="fas" [ngClass]="method.value === paymentForm.get('paymentMethod')?.value ? 'fa-check-circle' : 'fa-circle'"></i>
+                </div>
+                
+                <div class="payment-logos">
+                  <img *ngFor="let logo of method.logos" [src]="logo.src" [alt]="logo.alt">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Champ caché pour stocker la valeur -->
+            <div class="form-group" style="display: none;">
+              <select id="paymentMethod" formControlName="paymentMethod">
+                <option *ngFor="let method of paymentMethods" [value]="method.value">{{ method.label }}</option>
+              </select>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="amount">Montant</label>
+            <div class="input-with-icon">
+              <span class="currency-icon">€</span>
+              <input type="number" id="amount" formControlName="amount" step="0.01">
+            </div>
+          </div>
+  
+          <ng-container *ngIf="paymentForm.get('paymentMethod')?.value === 'CreditCard'">
+            <div class="card-details">
+              <div class="form-group">
+                <label for="cardNumber">Numéro de carte</label>
+                <input type="text" id="cardNumber" formControlName="cardNumber" placeholder="1234 5678 9012 3456" maxlength="16">
+                <div *ngIf="paymentForm.get('cardNumber')?.invalid && paymentForm.get('cardNumber')?.touched" class="error-text">
+                  Veuillez entrer un numéro de carte valide (16 chiffres)
+                </div>
+              </div>
+  
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="expiryDate">Date d'expiration</label>
+                  <input type="text" id="expiryDate" formControlName="expiryDate" placeholder="MM/YY" maxlength="5">
+                  <div *ngIf="paymentForm.get('expiryDate')?.invalid && paymentForm.get('expiryDate')?.touched" class="error-text">
+                    Format: MM/YY
+                  </div>
+                </div>
+  
+                <div class="form-group">
+                  <label for="cvv">CVV</label>
+                  <input type="text" id="cvv" formControlName="cvv" placeholder="123" maxlength="4">
+                  <div *ngIf="paymentForm.get('cvv')?.invalid && paymentForm.get('cvv')?.touched" class="error-text">
+                    3 ou 4 chiffres
+                  </div>
+                </div>
+              </div>
+  
+              <div class="form-group">
+                <label for="nameOnCard">Nom sur la carte</label>
+                <input type="text" id="nameOnCard" formControlName="nameOnCard" placeholder="JEAN DUPONT">
+                <div *ngIf="paymentForm.get('nameOnCard')?.invalid && paymentForm.get('nameOnCard')?.touched" class="error-text">
+                  Veuillez entrer le nom figurant sur la carte
+                </div>
+              </div>
+  
+              <div class="form-group checkbox">
+                <input type="checkbox" id="saveCard" formControlName="saveCard">
+                <label for="saveCard">Sauvegarder cette carte pour de futurs paiements</label>
+              </div>
+            </div>
+          </ng-container>
+  
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" (click)="goBack()">Annuler</button>
+            <button type="submit" class="btn-primary" [disabled]="paymentForm.invalid || processing">
+              <span *ngIf="processing" class="spinner-small"></span>
+              <span *ngIf="!processing"><i class="fas fa-lock"></i> Payer {{ invoice.totalAmount | currency:'EUR' }}</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
