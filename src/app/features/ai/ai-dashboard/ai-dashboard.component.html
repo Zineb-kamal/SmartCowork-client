@@ -1,0 +1,112 @@
+<!-- src/app/features/ai/ai-dashboard/ai-dashboard.component.html -->
+<div class="ai-dashboard-container">
+    <div class="dashboard-header">
+      <h1>Recommandations personnalisées</h1>
+      <div class="header-actions">
+        <button class="btn-primary" routerLink="/ai/preferences">
+          <i class="fas fa-cog"></i> Préférences
+        </button>
+        <button class="btn-secondary" (click)="loadRecommendations()">
+          <i class="fas fa-sync-alt"></i> Actualiser
+        </button>
+      </div>
+    </div>
+  
+    <!-- Messages de succès et d'erreur -->
+    <div *ngIf="success" class="success-message">
+      <i class="fas fa-check-circle"></i> {{ success }}
+    </div>
+    <div *ngIf="error" class="error-message">
+      <i class="fas fa-exclamation-circle"></i> {{ error }}
+    </div>
+  
+    <!-- Chargement -->
+    <div *ngIf="loading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Chargement des recommandations...</p>
+    </div>
+    
+    <!-- Contenu du tableau de bord -->
+    <div *ngIf="!loading" class="dashboard-content">
+      <div class="info-panel">
+        <h3><i class="fas fa-lightbulb"></i> Comment ça fonctionne ?</h3>
+        <p>Notre système d'intelligence artificielle analyse vos habitudes de réservation et vos préférences pour vous suggérer des espaces, des créneaux horaires et des options tarifaires adaptés à vos besoins.</p>
+        <p>Plus vous utilisez notre plateforme, plus nos recommandations seront pertinentes !</p>
+      </div>
+  
+      <!-- Section Espaces recommandés -->
+      <div class="recommendation-section">
+        <div class="section-header">
+          <h2>Espaces recommandés</h2>
+          <button class="btn-link" routerLink="/ai/space-recommendations">
+            Voir tout <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+        
+        <div *ngIf="spaceRecommendations.length === 0" class="empty-state">
+          <i class="fas fa-building empty-icon"></i>
+          <p>Aucune recommandation d'espace disponible pour le moment</p>
+        </div>
+        
+        <app-ai-recommendations
+          *ngIf="spaceRecommendations.length > 0"
+          [title]="'Espaces recommandés pour vous'"
+          [userId]="userId"
+          [type]="'Space'"
+          (applied)="onRecommendationApplied($event)"
+          (deleted)="onRecommendationDeleted($event)"
+          (marked)="onRecommendationMarked($event)"
+        ></app-ai-recommendations>
+      </div>
+  
+      <!-- Section Créneaux recommandés -->
+      <div class="recommendation-section">
+        <div class="section-header">
+          <h2>Créneaux horaires recommandés</h2>
+          <button class="btn-link" routerLink="/ai/timeslot-recommendations/best">
+            Voir tout <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+        
+        <div *ngIf="timeSlotRecommendations.length === 0" class="empty-state">
+          <i class="fas fa-clock empty-icon"></i>
+          <p>Aucune recommandation de créneau horaire disponible pour le moment</p>
+        </div>
+        
+        <app-ai-recommendations
+          *ngIf="timeSlotRecommendations.length > 0"
+          [title]="'Meilleurs moments pour réserver'"
+          [userId]="userId"
+          [type]="'TimeSlot'"
+          (applied)="onRecommendationApplied($event)"
+          (deleted)="onRecommendationDeleted($event)"
+          (marked)="onRecommendationMarked($event)"
+        ></app-ai-recommendations>
+      </div>
+  
+      <!-- Section Plans tarifaires recommandés -->
+      <div class="recommendation-section">
+        <div class="section-header">
+          <h2>Plans tarifaires recommandés</h2>
+          <button class="btn-link" routerLink="/ai/pricing-recommendations">
+            Voir tout <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+        
+        <div *ngIf="pricingRecommendations.length === 0" class="empty-state">
+          <i class="fas fa-tag empty-icon"></i>
+          <p>Aucune recommandation tarifaire disponible pour le moment</p>
+        </div>
+        
+        <app-ai-recommendations
+          *ngIf="pricingRecommendations.length > 0"
+          [title]="'Plans tarifaires optimaux pour votre usage'"
+          [userId]="userId"
+          [type]="'Pricing'"
+          (applied)="onRecommendationApplied($event)"
+          (deleted)="onRecommendationDeleted($event)"
+          (marked)="onRecommendationMarked($event)"
+        ></app-ai-recommendations>
+      </div>
+    </div>
+  </div>

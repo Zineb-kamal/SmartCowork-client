@@ -1,0 +1,108 @@
+<!-- src/app/features/ai/user-preferences/user-preferences.component.html -->
+<div class="preferences-container">
+    <div class="preferences-header">
+      <h1>Préférences IA et personnalisation</h1>
+      <button class="btn-secondary" routerLink="/ai">
+        <i class="fas fa-arrow-left"></i> Retour au tableau de bord
+      </button>
+    </div>
+  
+    <!-- Messages de succès et d'erreur -->
+    <div *ngIf="success" class="success-message">
+      <i class="fas fa-check-circle"></i> {{ success }}
+    </div>
+    <div *ngIf="error" class="error-message">
+      <i class="fas fa-exclamation-circle"></i> {{ error }}
+    </div>
+  
+    <!-- Section explicative -->
+    <div class="info-panel">
+      <h3><i class="fas fa-info-circle"></i> Comment fonctionnent les préférences ?</h3>
+      <p>Définissez vos préférences pour améliorer la qualité de nos recommandations. Ces informations nous aident à personnaliser votre expérience et à vous suggérer des espaces et des créneaux qui correspondent mieux à vos besoins.</p>
+      <p><strong>Note :</strong> Même si vous ne définissez pas de préférences, notre système d'IA apprendra de vos habitudes d'utilisation au fil du temps.</p>
+    </div>
+  
+    <!-- Formulaire de préférences -->
+    <div class="preferences-form-container">
+      <div *ngIf="loading" class="loading-container">
+        <div class="spinner"></div>
+        <p>Chargement de vos préférences...</p>
+      </div>
+  
+      <form *ngIf="!loading" [formGroup]="preferencesForm" (ngSubmit)="onSubmit()" class="preferences-form">
+        <div class="form-section">
+          <h2>Préférences d'espace</h2>
+          
+          <div class="form-group">
+            <label for="preferredSpaceType">Type d'espace préféré</label>
+            <select id="preferredSpaceType" formControlName="preferredSpaceType" class="form-control">
+              <option value="">Aucune préférence</option>
+              <option *ngFor="let type of spaceTypes" [value]="type.value">{{ type.label }}</option>
+            </select>
+          </div>
+  
+          <div class="form-group">
+            <label for="preferredCapacity">Capacité préférée (nombre de personnes)</label>
+            <input type="number" id="preferredCapacity" formControlName="preferredCapacity" class="form-control" min="1" max="100">
+            <div *ngIf="preferencesForm.get('preferredCapacity')?.invalid && preferencesForm.get('preferredCapacity')?.touched" class="form-error">
+              La capacité doit être entre 1 et 100 personnes
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-section">
+          <h2>Préférences horaires</h2>
+          
+          <div class="form-group">
+            <label for="preferredDayOfWeek">Jour de la semaine préféré</label>
+            <select id="preferredDayOfWeek" formControlName="preferredDayOfWeek" class="form-control">
+              <option value="">Aucune préférence</option>
+              <option *ngFor="let day of daysOfWeek" [value]="day.value">{{ day.label }}</option>
+            </select>
+          </div>
+  
+          <div class="form-group">
+            <label for="preferredStartTime">Heure de début préférée</label>
+            <input type="time" id="preferredStartTime" formControlName="preferredStartTime" class="form-control">
+          </div>
+  
+          <div class="form-group">
+            <label for="preferredDuration">Durée préférée</label>
+            <input type="time" id="preferredDuration" formControlName="preferredDuration" class="form-control">
+          </div>
+        </div>
+  
+        <div class="form-section" formGroupName="featurePreferences">
+          <h2>Importance des équipements</h2>
+          <p class="feature-instructions">Faites glisser les curseurs pour indiquer l'importance de chaque équipement pour vous</p>
+          
+          <div class="features-grid">
+            <div *ngFor="let feature of features" class="feature-item">
+              <label [for]="feature.key">{{ feature.label }}</label>
+              <div class="slider-container">
+                <input 
+                  type="range" 
+                  [id]="feature.key" 
+                  [formControlName]="feature.key" 
+                  min="0" 
+                  max="1" 
+                  step="0.1" 
+                  class="slider"
+                >
+                <span class="slider-value">{{ getImportanceLabel(preferencesForm.get('featurePreferences')?.get(feature.key)?.value) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="loadUserPreferences()">
+            <i class="fas fa-undo"></i> Réinitialiser
+          </button>
+          <button type="submit" class="btn-primary" [disabled]="preferencesForm.invalid || loading">
+            <i class="fas fa-save"></i> Enregistrer les préférences
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>

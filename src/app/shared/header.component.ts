@@ -23,6 +23,7 @@ import { UserRole } from '../core/models/user.model';
           <a [routerLink]="['/locations']">{{ 'HEADER.LOCATIONS' | translate }}</a>
           <a [routerLink]="['/spaces']">{{ 'HEADER.SPACES' | translate }}</a>
           <a [routerLink]="['/booking']">{{ 'HEADER.BOOKINGS' | translate }}</a>
+          <a [routerLink]="['/ai']">{{ 'Recommandations IA' | translate }}</a>
           <!-- Changed this from router link to a button that shows the popup -->
           <a href="javascript:void(0)" (click)="showContactPopup($event)">{{ 'HEADER.CONTACT' | translate }}</a>
           <a [routerLink]="['/about']">{{ 'HEADER.ABOUT' | translate }}</a>

@@ -22,6 +22,13 @@ import { TransactionHistoryComponent } from './features/billing/transaction-hist
 import { InvoiceDetailsComponent } from './features/billing/invoice-details/invoice-details.component';
 import { BillingDashboardComponent } from './features/billing/billing-dashboard/billing-dashboard.component';
 import { SpaceCreateComponent } from './features/spaces/space-create/space-create.component';
+import { AiDashboardComponent } from './features/ai/ai-dashboard/ai-dashboard.component';
+import { UserPreferencesComponent } from './features/ai/user-preferences/user-preferences.component';
+import { SpaceRecommendationsComponent } from './features/ai/space-recommendations/space-recommendations.component';
+import { TimeslotRecommendationsComponent } from './features/ai/timeslot-recommendations/timeslot-recommendations.component';
+import { PricingRecommendationsComponent } from './features/ai/pricing-recommendations/pricing-recommendations.component';
+import { OccupancyPredictionsComponent } from './features/ai/occupancy-predictions/occupancy-predictions.component';
+import { RecommendationDetailsComponent } from './features/ai/recommendation-details/recommendation-details.component';
 
 export const routes: Routes = [
   // Routes publiques
@@ -136,7 +143,48 @@ export const routes: Routes = [
     path: 'locations',
     component: LocationsComponent
   },
-  
+  // Routes du service IA
+{
+  path: 'ai',
+  children: [
+    {
+      path: '',
+      component: AiDashboardComponent,
+      canActivate: [() => inject(AuthGuard).canActivate()]
+    },
+    {
+      path: 'preferences',
+      component: UserPreferencesComponent,
+      canActivate: [() => inject(AuthGuard).canActivate()]
+    },
+    {
+      path: 'space-recommendations',
+      component: SpaceRecommendationsComponent,
+      canActivate: [() => inject(AuthGuard).canActivate()]
+    },
+    {
+      path: 'timeslot-recommendations/:spaceId',
+      component: TimeslotRecommendationsComponent,
+      canActivate: [() => inject(AuthGuard).canActivate()]
+    },
+    {
+      path: 'pricing-recommendations',
+      component: PricingRecommendationsComponent,
+      canActivate: [() => inject(AuthGuard).canActivate()]
+    },
+    {
+      path: 'occupancy-predictions',
+      component: OccupancyPredictionsComponent,
+      canActivate: [() => inject(AuthGuard).canActivate()],
+      data: { role: 'Admin' }
+    },
+    {
+      path: 'recommendation/:id',
+      component: RecommendationDetailsComponent,
+      canActivate: [() => inject(AuthGuard).canActivate()]
+    }
+  ]
+},
   // Route par défaut - redirige vers la page d'accueil
   { path: '**', redirectTo: '' }
 ];
